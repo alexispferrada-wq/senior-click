@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="BancoChile Digital — Portal bancario con Modo SeniorClick: accesibilidad cognitiva para adultos mayores de 60 años. Realiza transferencias de forma sencilla, segura y autónoma." />
+  <meta name="robots" content="noindex" />
+  <title>BancoChile Digital — Banca en Línea</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    /* ============================================================
+       DESIGN TOKENS & RESET
+    ============================================================ */
+    :root {
+      /* Bank normal palette */
+      --bank-primary:    #0a2560;
+      --bank-secondary:  #1547b0;
+      --bank-accent:     #e8621a;
+      --bank-bg:         #edf1f7;
+      --bank-surface:    #ffffff;
+      --bank-text:       #1a1a2e;
+      --bank-muted:      #6b7a99;
+      --bank-border:     #d0d9ea;
+
+      /* SeniorClick palette */
+      --sc-primary:      #0a7c59;
+      --sc-primary-dk:   #065c41;
+      --sc-primary-lt:   #e6f7f2;
+      --sc-accent:       #f59e0b;
+      --sc-danger:       #dc2626;
+      --sc-success:      #059669;
+      --sc-bg:           #f0faf6;
+      --sc-surface:      #ffffff;
+      --sc-text:         #0f172a;
+      --sc-muted:        #475569;
+      --sc-border:       #a7d7c5;
+
+      /* Typography */
+      --font: 'Inter', sans-serif;
+
+      /* Radii */
+      --r-sm: 8px;
+      --r-md: 14px;
+      --r-lg: 22px;
+      --r-xl: 32px;
+
+      /* Shadows */
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+      --shadow-md: 0 4px 16px rgba(0,0,0,.10), 0 2px 6px rgba(0,0,0,.06);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,.14), 0 4px 12px rgba(0,0,0,.08);
+      --shadow-xl: 0 24px 64px rgba(0,0,0,.18);
+
+      /* Transitions */
+      --t-fast: 180ms ease;
+      --t-med:  320ms cubic-bezier(.4,0,.2,1);
+      --t-slow: 550ms cubic-bezier(.4,0,.2,1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bank-bg);
+      color: var(--bank-text);
+      font-size: 15px;
+      line-height: 1.5;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    img { display: block; max-width: 100%; }
+    button { cursor: pointer; font-family: inherit; border: none; background: none; }
+    a { color: inherit; text-decoration: none; }
+    ul, ol { list-style: none; }
+
+    /* ============================================================
+       UTILITY
+    ============================================================ */
+    .visually-hidden {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+
+    /* ============================================================
+       ===  BANK NORMAL MODE  ===
+    ============================================================ */
+
+    /* ── Top alert bar ── */
+    #bank-alert-bar {
+      background: var(--bank-primary);
+      color: #c8d8ff;
+      font-size: 12px;
+      padding: 6px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    #bank-alert-bar span { display: flex; align-items: center; gap: 6px; }
+
+    /* ── Bank Header ── */
+    #bank-header {
+      background: var(--bank-surface);
+      border-bottom: 3px solid var(--bank-primary);
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .bank-header-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 24px;
+      height: 68px;
+    }
+
+    /* Logo */
+    .bank-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 800; font-size: 20px; color: var(--bank-primary);
+      white-space: nowrap;
+    }
+    .bank-logo-icon {
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, var(--bank-primary), var(--bank-secondary));
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 18px; font-weight: 900;
+    }
+    .bank-logo-name { color: var(--bank-primary); }
+    .bank-logo-name span { color: var(--bank-accent); }
+
+    /* Nav */
+    #bank-nav { display: flex; align-items: center; gap: 2px; }
+    #bank-nav a {
+      font-size: 13px; font-weight: 500; color: var(--bank-muted);
+      padding: 8px 12px; border-radius: var(--r-sm);
+      transition: color var(--t-fast), background var(--t-fast);
+      white-space: nowrap;
+    }
+    #bank-nav a:hover { color: var(--bank-primary); background: var(--bank-bg); }
+    #bank-nav a.active { color: var(--bank-primary); font-weight: 600; }
+
+    /* Header right */
+    .bank-header-right {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .bank-user-info {
+      text-align: right;
+      font-size: 12px;
+    }
+    .bank-user-info strong { display: block; color: var(--bank-primary); font-size: 13px; }
+    .bank-user-info span { color: var(--bank-muted); }
+    .bank-avatar {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: linear-gradient(135deg, #c7d9ff, #7aa7f5);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 14px; color: var(--bank-primary);
+      border: 2px solid var(--bank-border);
+    }
+    .bank-notif {
+      position: relative;
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1.5px solid var(--bank-border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; color: var(--bank-muted);
+      transition: background var(--t-fast);
+    }
+    .bank-notif:hover { background: var(--bank-bg); }
+    .bank-notif-dot {
+      position: absolute; top: 6px; right: 6px;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--bank-accent); border: 2px solid white;
+    }
+
+    /* ── SeniorClick Activation Button (floating) ── */
+    #sc-activate-btn {
+      position: fixed;
+      top: 80px;
+      right: 24px;
+      z-index: 200;
+      background: linear-gradient(135deg, #0a7c59, #0eb07d);
+      color: white;
+      border-radius: 50px;
+      padding: 14px 22px;
+      font-size: 14px;
+      font-weight: 700;
+      display: flex; align-items: center; gap: 10px;
+      box-shadow: 0 6px 30px rgba(10,124,89,.45), 0 2px 8px rgba(10,124,89,.3);
+      border: 2px solid rgba(255,255,255,.25);
+      transition: transform var(--t-med), box-shadow var(--t-med);
+      animation: scPulse 2.5s ease-in-out infinite;
+    }
+    #sc-activate-btn:hover {
+      transform: translateY(-3px) scale(1.04);
+      box-shadow: 0 10px 40px rgba(10,124,89,.55), 0 4px 12px rgba(10,124,89,.4);
+      animation: none;
+    }
+    #sc-activate-btn:active { transform: translateY(0) scale(0.98); }
+    .sc-btn-icon {
+      font-size: 20px;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,.2));
+    }
+    .sc-btn-text { line-height: 1.2; }
+    .sc-btn-text small {
+      display: block; font-size: 10px; font-weight: 400;
+      opacity: .85; margin-top: 1px;
+    }
+    .sc-btn-badge {
+      background: white; color: var(--sc-primary);
+      border-radius: 20px; padding: 2px 8px;
+      font-size: 10px; font-weight: 800;
+      letter-spacing: .5px; text-transform: uppercase;
+    }
+
+    @keyframes scPulse {
+      0%, 100% { box-shadow: 0 6px 30px rgba(10,124,89,.45), 0 0 0 0 rgba(10,124,89,.4); }
+      50%       { box-shadow: 0 6px 30px rgba(10,124,89,.45), 0 0 0 12px rgba(10,124,89,0); }
+    }
+
+    /* ── Bank Main Layout ── */
+    #bank-main {
+      max-width: 1280px;
+      margin: 28px auto;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 24px;
+    }
+
+    /* ── Hero Banner ── */
+    #bank-hero {
+      background: linear-gradient(135deg, var(--bank-primary) 0%, #1a3a8f 60%, #2a5fcc 100%);
+      border-radius: var(--r-lg);
+      padding: 32px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    #bank-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    #bank-hero h2 { font-size: 22px; font-weight: 700; margin-bottom: 6px; position: relative; }
+    #bank-hero p { font-size: 14px; opacity: .8; margin-bottom: 20px; position: relative; max-width: 420px; }
+    .bank-hero-btns { display: flex; gap: 12px; flex-wrap: wrap; position: relative; }
+    .bank-hero-btn {
+      padding: 10px 20px; border-radius: var(--r-sm); font-size: 13px; font-weight: 600;
+      border: 1.5px solid rgba(255,255,255,.3); color: white;
+      background: rgba(255,255,255,.12); backdrop-filter: blur(4px);
+      transition: background var(--t-fast), border-color var(--t-fast);
+    }
+    .bank-hero-btn:hover { background: rgba(255,255,255,.22); border-color: rgba(255,255,255,.5); }
+    .bank-hero-btn.primary-btn {
+      background: white; color: var(--bank-primary); border-color: transparent;
+    }
+    .bank-hero-btn.primary-btn:hover { background: #f0f4ff; }
+
+    /* ── Balance Card ── */
+    .bank-balance-card {
+      background: var(--bank-surface);
+      border-radius: var(--r-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--bank-border);
+      margin-bottom: 20px;
+    }
+    .bank-balance-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 16px;
+    }
+    .bank-balance-label {
+      font-size: 12px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .8px; color: var(--bank-muted);
+    }
+    .bank-balance-toggle { font-size: 18px; color: var(--bank-muted); }
+    .bank-balance-amount {
+      font-size: 32px; font-weight: 800; color: var(--bank-primary);
+      letter-spacing: -1px; margin-bottom: 6px;
+    }
+    .bank-balance-sub {
+      font-size: 12px; color: var(--bank-muted);
+      display: flex; gap: 16px;
+    }
+    .bank-balance-sub span { display: flex; align-items: center; gap: 4px; }
+    .balance-change.up { color: #059669; }
+    .balance-change.dn { color: #dc2626; }
+
+    /* ── Quick Actions ── */
+    .bank-quick-actions {
+      background: var(--bank-surface);
+      border-radius: var(--r-lg);
+      padding: 20px 24px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--bank-border);
+      margin-bottom: 20px;
+    }
+    .bank-quick-actions h3 {
+      font-size: 13px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .8px; color: var(--bank-muted); margin-bottom: 16px;
+    }
+    .qa-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+    .qa-item {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      padding: 14px 8px; border-radius: var(--r-md);
+      border: 1.5px solid var(--bank-border);
+      font-size: 11px; font-weight: 600; color: var(--bank-muted);
+      transition: all var(--t-fast);
+    }
+    .qa-item:hover {
+      border-color: var(--bank-secondary);
+      color: var(--bank-secondary);
+      background: #f0f4ff;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+    .qa-icon { font-size: 22px; }
+
+    /* ── Recent Transactions ── */
+    .bank-transactions {
+      background: var(--bank-surface);
+      border-radius: var(--r-lg);
+      padding: 20px 24px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--bank-border);
+      margin-bottom: 20px;
+    }
+    .bank-section-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 16px;
+    }
+    .bank-section-header h3 {
+      font-size: 14px; font-weight: 700; color: var(--bank-text);
+    }
+    .bank-section-link {
+      font-size: 12px; color: var(--bank-secondary); font-weight: 600;
+    }
+    .txn-list { display: flex; flex-direction: column; gap: 2px; }
+    .txn-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 12px 10px; border-radius: var(--r-sm);
+      transition: background var(--t-fast);
+    }
+    .txn-item:hover { background: var(--bank-bg); }
+    .txn-avatar {
+      width: 38px; height: 38px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; flex-shrink: 0;
+    }
+    .txn-info { flex: 1; min-width: 0; }
+    .txn-name { font-size: 14px; font-weight: 600; color: var(--bank-text); }
+    .txn-date { font-size: 11px; color: var(--bank-muted); }
+    .txn-amount {
+      font-size: 14px; font-weight: 700;
+      text-align: right;
+    }
+    .txn-amount.credit { color: #059669; }
+    .txn-amount.debit  { color: var(--bank-text); }
+
+    /* ── Sidebar ── */
+    #bank-sidebar { display: flex; flex-direction: column; gap: 18px; }
+
+    .sidebar-card {
+      background: var(--bank-surface);
+      border-radius: var(--r-lg);
+      padding: 18px 20px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--bank-border);
+    }
+    .sidebar-card h4 {
+      font-size: 12px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .8px; color: var(--bank-muted); margin-bottom: 14px;
+    }
+    .sidebar-links { display: flex; flex-direction: column; gap: 4px; }
+    .sidebar-link {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 10px; border-radius: var(--r-sm);
+      font-size: 13px; color: var(--bank-muted); font-weight: 500;
+      transition: all var(--t-fast);
+    }
+    .sidebar-link:hover { background: var(--bank-bg); color: var(--bank-primary); }
+    .sidebar-link-icon { font-size: 16px; width: 20px; text-align: center; }
+
+    /* Promo ad card */
+    .sidebar-promo {
+      background: linear-gradient(135deg, #e8621a, #f59e0b);
+      border-radius: var(--r-lg);
+      padding: 18px;
+      color: white;
+      border: none;
+    }
+    .sidebar-promo h4 { color: rgba(255,255,255,.8); }
+    .sidebar-promo .promo-title { font-size: 16px; font-weight: 800; margin-bottom: 6px; }
+    .sidebar-promo .promo-sub { font-size: 12px; opacity: .9; margin-bottom: 14px; }
+    .sidebar-promo .promo-cta {
+      display: inline-block; background: white; color: #e8621a;
+      padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 700;
+    }
+
+    /* Bank footer */
+    #bank-footer {
+      background: var(--bank-primary);
+      color: rgba(255,255,255,.5);
+      font-size: 11px;
+      padding: 20px 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    #bank-footer a { color: rgba(255,255,255,.7); margin: 0 8px; }
+
+
+    /* ============================================================
+       ===  SENIORCLICK OVERLAY  ===
+    ============================================================ */
+    #sc-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: var(--sc-bg);
+      display: flex;
+      flex-direction: column;
+      transform: scale(1.04);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--t-slow), transform var(--t-slow);
+      overflow-y: auto;
+    }
+    #sc-overlay.sc-active {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: all;
+    }
+
+    /* ── SC Header ── */
+    #sc-header {
+      background: var(--sc-primary);
+      padding: 0 32px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 20px rgba(10,124,89,.3);
+      flex-shrink: 0;
+    }
+    .sc-logo {
+      display: flex; align-items: center; gap: 12px;
+      color: white; font-size: 20px; font-weight: 800;
+    }
+    .sc-logo-icon {
+      width: 44px; height: 44px;
+      background: rgba(255,255,255,.2);
+      border-radius: 12px;
+      border: 2px solid rgba(255,255,255,.4);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+    }
+    .sc-mode-badge {
+      background: rgba(255,255,255,.2);
+      border: 1.5px solid rgba(255,255,255,.4);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 13px; font-weight: 700; color: white;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .sc-mode-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #4ade80;
+      box-shadow: 0 0 0 3px rgba(74,222,128,.3);
+      animation: modePulse 2s infinite;
+    }
+    @keyframes modePulse {
+      0%, 100% { box-shadow: 0 0 0 3px rgba(74,222,128,.3); }
+      50%       { box-shadow: 0 0 0 6px rgba(74,222,128,0); }
+    }
+    #sc-deactivate-btn {
+      background: rgba(255,255,255,.15);
+      border: 2px solid rgba(255,255,255,.35);
+      border-radius: 12px;
+      padding: 10px 18px;
+      color: white; font-size: 14px; font-weight: 600;
+      display: flex; align-items: center; gap: 8px;
+      transition: background var(--t-fast);
+    }
+    #sc-deactivate-btn:hover { background: rgba(255,255,255,.28); }
+
+    /* ── SC Body ── */
+    #sc-body {
+      flex: 1;
+      max-width: 780px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 40px 24px 60px;
+    }
+
+    /* ── Progress Indicator ── */
+    #sc-progress {
+      margin-bottom: 40px;
+    }
+    .sc-progress-label {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 12px;
+    }
+    .sc-progress-title {
+      font-size: 20px; font-weight: 700; color: var(--sc-primary);
+    }
+    .sc-progress-counter {
+      font-size: 15px; font-weight: 600; color: var(--sc-muted);
+    }
+    .sc-progress-bar-track {
+      height: 8px;
+      background: var(--sc-border);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .sc-progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--sc-primary), #0eb07d);
+      border-radius: 99px;
+      transition: width var(--t-slow);
+    }
+
+    /* ── SC Steps ── */
+    .sc-step { display: none; animation: stepIn var(--t-med) both; }
+    .sc-step.active { display: block; }
+
+    @keyframes stepIn {
+      from { opacity: 0; transform: translateX(30px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    .sc-step-title {
+      font-size: 32px; font-weight: 800;
+      color: var(--sc-text);
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .sc-step-subtitle {
+      font-size: 20px; color: var(--sc-muted);
+      margin-bottom: 32px; line-height: 1.4;
+    }
+
+    /* Help tip */
+    .sc-help-tip {
+      background: #fef3c7;
+      border-left: 5px solid var(--sc-accent);
+      border-radius: 0 var(--r-md) var(--r-md) 0;
+      padding: 14px 18px;
+      margin-bottom: 28px;
+      display: flex; align-items: flex-start; gap: 12px;
+    }
+    .sc-help-tip-icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+    .sc-help-tip-text { font-size: 17px; color: #7c4a00; line-height: 1.4; }
+
+    /* ── STEP 1: Recipient cards ── */
+    .sc-recipients-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .sc-recipient-card {
+      background: white;
+      border: 3px solid var(--sc-border);
+      border-radius: var(--r-xl);
+      padding: 24px 20px;
+      display: flex; align-items: center; gap: 18px;
+      cursor: pointer;
+      transition: all var(--t-med);
+      position: relative;
+      overflow: hidden;
+    }
+    .sc-recipient-card::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--sc-primary-lt);
+      opacity: 0;
+      transition: opacity var(--t-fast);
+    }
+    .sc-recipient-card:hover {
+      border-color: var(--sc-primary);
+      box-shadow: 0 8px 32px rgba(10,124,89,.18);
+      transform: translateY(-3px);
+    }
+    .sc-recipient-card:hover::after { opacity: 1; }
+    .sc-recipient-card.selected {
+      border-color: var(--sc-primary);
+      background: var(--sc-primary-lt);
+      box-shadow: 0 0 0 4px rgba(10,124,89,.2);
+    }
+    .sc-recipient-card.selected::after { opacity: 0; }
+    .sc-recipient-avatar {
+      width: 60px; height: 60px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; font-weight: 800; color: white;
+      flex-shrink: 0; position: relative; z-index: 1;
+    }
+    .sc-recipient-info { flex: 1; position: relative; z-index: 1; }
+    .sc-recipient-name { font-size: 20px; font-weight: 700; color: var(--sc-text); margin-bottom: 3px; }
+    .sc-recipient-bank { font-size: 15px; color: var(--sc-muted); }
+    .sc-recipient-check {
+      font-size: 24px;
+      opacity: 0;
+      transition: opacity var(--t-fast);
+      position: relative; z-index: 1;
+    }
+    .sc-recipient-card.selected .sc-recipient-check { opacity: 1; }
+
+    /* ── STEP 2: Numpad ── */
+    .sc-amount-display {
+      background: white;
+      border: 3px solid var(--sc-border);
+      border-radius: var(--r-xl);
+      padding: 28px 32px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .sc-amount-label {
+      font-size: 18px; color: var(--sc-muted); margin-bottom: 10px; font-weight: 600;
+    }
+    .sc-amount-value {
+      font-size: 52px; font-weight: 900; color: var(--sc-primary);
+      letter-spacing: -2px; transition: color var(--t-fast);
+      min-height: 70px; display: flex; align-items: center; justify-content: center;
+    }
+    .sc-amount-value.has-value { color: var(--sc-text); }
+    .sc-amount-error { font-size: 15px; color: var(--sc-danger); margin-top: 8px; min-height: 22px; }
+
+    .sc-numpad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      max-width: 380px;
+      margin: 0 auto;
+    }
+    .sc-num-btn {
+      background: white;
+      border: 2.5px solid var(--sc-border);
+      border-radius: var(--r-lg);
+      padding: 22px 10px;
+      font-size: 26px; font-weight: 700; color: var(--sc-text);
+      transition: all var(--t-fast);
+      box-shadow: var(--shadow-sm);
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .sc-num-btn:hover {
+      background: var(--sc-primary-lt);
+      border-color: var(--sc-primary);
+      color: var(--sc-primary);
+      transform: scale(1.04);
+      box-shadow: var(--shadow-md);
+    }
+    .sc-num-btn:active { transform: scale(0.96); }
+    .sc-num-btn.del-btn { font-size: 20px; color: var(--sc-danger); border-color: #fca5a5; }
+    .sc-num-btn.del-btn:hover { background: #fef2f2; border-color: var(--sc-danger); }
+    .sc-num-btn.zero-btn { grid-column: span 1; }
+    .sc-num-btn.preset-row {
+      font-size: 17px; font-weight: 700;
+      background: var(--sc-primary-lt); border-color: var(--sc-primary);
+      color: var(--sc-primary);
+    }
+    .sc-num-btn.preset-row:hover { background: var(--sc-primary); color: white; }
+
+    /* ── STEP 3: Confirmation ── */
+    .sc-confirmation-card {
+      background: white;
+      border: 3px solid var(--sc-primary);
+      border-radius: var(--r-xl);
+      padding: 36px 32px;
+      box-shadow: 0 8px 32px rgba(10,124,89,.12);
+    }
+    .sc-confirm-header {
+      display: flex; align-items: center; gap: 16px;
+      padding-bottom: 24px;
+      border-bottom: 2px solid var(--sc-primary-lt);
+      margin-bottom: 28px;
+    }
+    .sc-confirm-icon { font-size: 48px; }
+    .sc-confirm-title { font-size: 26px; font-weight: 800; color: var(--sc-text); line-height: 1.2; }
+    .sc-confirm-subtitle { font-size: 17px; color: var(--sc-muted); margin-top: 4px; }
+
+    .sc-confirm-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 18px 0;
+      border-bottom: 1.5px solid var(--sc-primary-lt);
+    }
+    .sc-confirm-row:last-child { border-bottom: none; }
+    .sc-confirm-key { font-size: 18px; color: var(--sc-muted); font-weight: 600; }
+    .sc-confirm-val { font-size: 22px; font-weight: 800; color: var(--sc-text); text-align: right; }
+    .sc-confirm-val.highlight { color: var(--sc-primary); font-size: 28px; }
+
+    .sc-confirm-warning {
+      background: #fef3c7;
+      border: 2px solid #f59e0b;
+      border-radius: var(--r-md);
+      padding: 16px 20px;
+      margin-top: 24px;
+      display: flex; align-items: center; gap: 14px;
+      font-size: 17px; color: #7c4a00; font-weight: 500;
+    }
+    .sc-confirm-warning-icon { font-size: 24px; flex-shrink: 0; }
+
+    /* ── STEP 4: Success ── */
+    #sc-step-4 {
+      text-align: center;
+      padding: 20px 0;
+    }
+    .sc-success-animation {
+      font-size: 100px;
+      margin-bottom: 24px;
+      display: block;
+      animation: successPop .6s cubic-bezier(.17,.67,.35,1.6) both;
+      animation-delay: .15s;
+    }
+    @keyframes successPop {
+      from { transform: scale(0) rotate(-20deg); opacity: 0; }
+      to   { transform: scale(1) rotate(0); opacity: 1; }
+    }
+    .sc-success-title {
+      font-size: 40px; font-weight: 900; color: var(--sc-primary);
+      margin-bottom: 12px;
+      animation: fadeUp .5s ease both;
+      animation-delay: .35s;
+    }
+    .sc-success-subtitle {
+      font-size: 22px; color: var(--sc-muted);
+      margin-bottom: 36px;
+      animation: fadeUp .5s ease both;
+      animation-delay: .45s;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .sc-success-receipt {
+      background: white;
+      border: 3px solid var(--sc-border);
+      border-radius: var(--r-xl);
+      padding: 28px;
+      text-align: left;
+      max-width: 480px;
+      margin: 0 auto 32px;
+      animation: fadeUp .5s ease both;
+      animation-delay: .55s;
+    }
+    .sc-success-receipt h4 {
+      font-size: 15px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .8px; color: var(--sc-muted);
+      margin-bottom: 16px; text-align: center;
+    }
+    .receipt-row {
+      display: flex; justify-content: space-between;
+      padding: 10px 0; border-bottom: 1px solid var(--sc-primary-lt);
+      font-size: 17px;
+    }
+    .receipt-row:last-child { border-bottom: none; }
+    .receipt-key { color: var(--sc-muted); font-weight: 500; }
+    .receipt-val { color: var(--sc-text); font-weight: 700; }
+    .receipt-val.big { font-size: 22px; color: var(--sc-primary); }
+
+    .sc-success-actions {
+      display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
+      animation: fadeUp .5s ease both;
+      animation-delay: .65s;
+    }
+
+    /* ── SC Action Buttons ── */
+    .sc-btn-row {
+      display: flex; gap: 14px; margin-top: 36px; flex-wrap: wrap;
+    }
+    .sc-btn {
+      padding: 18px 32px;
+      border-radius: var(--r-lg);
+      font-size: 20px; font-weight: 700;
+      display: flex; align-items: center; gap: 10px;
+      transition: all var(--t-med);
+      flex: 1; justify-content: center;
+      min-height: 64px;
+    }
+    .sc-btn-primary {
+      background: var(--sc-primary);
+      color: white;
+      box-shadow: 0 6px 24px rgba(10,124,89,.3);
+    }
+    .sc-btn-primary:hover {
+      background: var(--sc-primary-dk);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 32px rgba(10,124,89,.4);
+    }
+    .sc-btn-primary:active { transform: translateY(0); }
+    .sc-btn-primary:disabled {
+      background: #94a3b8; box-shadow: none; cursor: not-allowed; transform: none;
+    }
+    .sc-btn-secondary {
+      background: white;
+      color: var(--sc-muted);
+      border: 2.5px solid var(--sc-border);
+    }
+    .sc-btn-secondary:hover {
+      border-color: var(--sc-primary);
+      color: var(--sc-primary);
+      background: var(--sc-primary-lt);
+    }
+    .sc-btn-danger {
+      background: white; color: var(--sc-danger);
+      border: 2.5px solid #fca5a5;
+    }
+    .sc-btn-danger:hover {
+      background: #fef2f2; border-color: var(--sc-danger);
+    }
+    .sc-btn-success {
+      background: var(--sc-primary); color: white;
+      box-shadow: 0 6px 24px rgba(10,124,89,.3);
+    }
+    .sc-btn-success:hover {
+      background: var(--sc-primary-dk); transform: translateY(-2px);
+    }
+
+    /* ── Preset amounts row ── */
+    .sc-presets {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      max-width: 380px;
+      margin: 0 auto 16px;
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 900px) {
+      #bank-main {
+        grid-template-columns: 1fr;
+        padding: 0 16px;
+      }
+      #bank-sidebar { display: none; }
+      .qa-grid { grid-template-columns: repeat(4, 1fr); }
+      #sc-activate-btn { top: auto; bottom: 24px; right: 16px; }
+    }
+
+    @media (max-width: 600px) {
+      .bank-header-inner { padding: 0 16px; }
+      #bank-nav { display: none; }
+      .sc-recipients-grid { grid-template-columns: 1fr; }
+      .sc-step-title { font-size: 26px; }
+      .sc-body { padding: 24px 16px 40px; }
+      #sc-header { padding: 0 16px; }
+    }
+
+    /* ============================================================
+       BANK BLUR WHEN SC IS OPEN
+    ============================================================ */
+    .bank-content-blurred {
+      filter: blur(4px);
+      pointer-events: none;
+      user-select: none;
+      transition: filter var(--t-slow);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       BANK NORMAL MODE — WRAPPER
+  ═══════════════════════════════════════════════════════════ -->
+  <div id="bank-wrapper">
+
+    <!-- Top alert bar -->
+    <div id="bank-alert-bar" role="banner" aria-label="Información de seguridad del banco">
+      <span>🔒 Conexión segura y encriptada — BancoChile Digital S.A.</span>
+      <span>Sucursal virtual · Lun–Vie 08:00–22:00 · Sáb 09:00–14:00</span>
+    </div>
+
+    <!-- Bank Header -->
+    <header id="bank-header" role="banner">
+      <div class="bank-header-inner">
+
+        <!-- Logo -->
+        <a href="#" class="bank-logo" aria-label="BancoChile Digital — Ir al inicio">
+          <div class="bank-logo-icon" aria-hidden="true">B</div>
+          <span class="bank-logo-name">BancoChile <span>Digital</span></span>
+        </a>
+
+        <!-- Navigation -->
+        <nav id="bank-nav" role="navigation" aria-label="Navegación principal del banco">
+          <a href="#" class="active">Inicio</a>
+          <a href="#">Cuentas</a>
+          <a href="#">Tarjetas</a>
+          <a href="#">Créditos</a>
+          <a href="#">Seguros</a>
+          <a href="#">Inversiones</a>
+          <a href="#">Pagos</a>
+          <a href="#">Más servicios</a>
+        </nav>
+
+        <!-- Right side -->
+        <div class="bank-header-right">
+          <div class="bank-user-info" aria-label="Usuario conectado">
+            <strong>Carmen Rojas V.</strong>
+            <span>Cta. Vista: ****4821</span>
+          </div>
+          <div class="bank-avatar" aria-hidden="true">CR</div>
+          <button class="bank-notif" aria-label="3 notificaciones sin leer">
+            🔔
+            <span class="bank-notif-dot" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ── SENIORCLICK ACTIVATION BUTTON ── -->
+    <button id="sc-activate-btn" aria-label="Activar Modo SeniorClick: interfaz simplificada para mayor facilidad" onclick="activateSeniorClick()">
+      <span class="sc-btn-icon" aria-hidden="true">👴</span>
+      <span class="sc-btn-text">
+        Activar Modo SeniorClick
+        <small>Interfaz simplificada · Un solo clic</small>
+      </span>
+      <span class="sc-btn-badge" aria-hidden="true">NUEVO</span>
+    </button>
+
+    <!-- Bank Main Content -->
+    <main id="bank-main" role="main">
+
+      <!-- ── LEFT COLUMN ── -->
+      <div id="bank-content">
+
+        <!-- Hero Banner -->
+        <section id="bank-hero" aria-labelledby="hero-heading">
+          <h2 id="hero-heading">¡Bienvenida, Carmen! 👋</h2>
+          <p>Administra tus finanzas, realiza transferencias y accede a todos tus productos desde un solo lugar. Tu seguridad es nuestra prioridad.</p>
+          <div class="bank-hero-btns">
+            <button class="bank-hero-btn primary-btn">Nueva Transferencia</button>
+            <button class="bank-hero-btn">Pagar Cuenta</button>
+            <button class="bank-hero-btn">Cargar Bip/BioCard</button>
+            <button class="bank-hero-btn">Obtener Crédito</button>
+          </div>
+        </section>
+
+        <!-- Balance Card -->
+        <section class="bank-balance-card" aria-labelledby="balance-heading">
+          <div class="bank-balance-header">
+            <span class="bank-balance-label" id="balance-heading">Cuenta Vista Principal</span>
+            <button class="bank-balance-toggle" aria-label="Mostrar u ocultar saldo">👁</button>
+          </div>
+          <div class="bank-balance-amount" aria-label="Saldo disponible: $1.843.620">$1.843.620</div>
+          <div class="bank-balance-sub">
+            <span>N° Cuenta: 00182-482-01</span>
+            <span class="balance-change up" aria-label="Cambio positivo este mes">▲ +$120.000 este mes</span>
+          </div>
+        </section>
+
+        <!-- Quick Actions -->
+        <section class="bank-quick-actions" aria-labelledby="qa-heading">
+          <h3 id="qa-heading">Acciones rápidas</h3>
+          <div class="qa-grid" role="list">
+            <button class="qa-item" role="listitem">
+              <span class="qa-icon" aria-hidden="true">💸</span>
+              Transferir
+            </button>
+            <button class="qa-item" role="listitem">
+              <span class="qa-icon" aria-hidden="true">📄</span>
+              Pagar
+            </button>
+            <button class="qa-item" role="listitem">
+              <span class="qa-icon" aria-hidden="true">💳</span>
+              Tarjeta
+            </button>
+            <button class="qa-item" role="listitem">
+              <span class="qa-icon" aria-hidden="true">📊</span>
+              Cartola
+            </button>
+            <button class="qa-item" role="listitem">
+              <span class="qa-icon" aria-hidden="true">🏦</span>
+              Depósito
+            </button>
+          </div>
+        </section>
+
+        <!-- Recent Transactions -->
+        <section class="bank-transactions" aria-labelledby="txn-heading">
+          <div class="bank-section-header">
+            <h3 id="txn-heading">Últimos movimientos</h3>
+            <a href="#" class="bank-section-link">Ver todos →</a>
+          </div>
+          <ul class="txn-list" aria-label="Lista de últimas transacciones">
+            <li class="txn-item">
+              <div class="txn-avatar" style="background:#dbeafe;" aria-hidden="true">🏥</div>
+              <div class="txn-info">
+                <div class="txn-name">Farmacia Cruz Verde</div>
+                <div class="txn-date">Hoy, 09:14 · Débito automático</div>
+              </div>
+              <div class="txn-amount debit" aria-label="Monto: -$18.500">-$18.500</div>
+            </li>
+            <li class="txn-item">
+              <div class="txn-avatar" style="background:#dcfce7;" aria-hidden="true">💼</div>
+              <div class="txn-info">
+                <div class="txn-name">Pensión IPS — Depósito</div>
+                <div class="txn-date">12 Jun · Abono automático</div>
+              </div>
+              <div class="txn-amount credit" aria-label="Monto: +$542.000">+$542.000</div>
+            </li>
+            <li class="txn-item">
+              <div class="txn-avatar" style="background:#fef9c3;" aria-hidden="true">⚡</div>
+              <div class="txn-info">
+                <div class="txn-name">Empresa Eléctrica — Luz</div>
+                <div class="txn-date">10 Jun · TEF enviada</div>
+              </div>
+              <div class="txn-amount debit" aria-label="Monto: -$32.400">-$32.400</div>
+            </li>
+            <li class="txn-item">
+              <div class="txn-avatar" style="background:#ede9fe;" aria-hidden="true">🛒</div>
+              <div class="txn-info">
+                <div class="txn-name">Supermercado Jumbo</div>
+                <div class="txn-date">09 Jun · Compra con tarjeta</div>
+              </div>
+              <div class="txn-amount debit" aria-label="Monto: -$67.800">-$67.800</div>
+            </li>
+            <li class="txn-item">
+              <div class="txn-avatar" style="background:#fce7f3;" aria-hidden="true">👨‍👩‍👧</div>
+              <div class="txn-info">
+                <div class="txn-name">María González — TEF</div>
+                <div class="txn-date">07 Jun · Transferencia recibida</div>
+              </div>
+              <div class="txn-amount credit" aria-label="Monto: +$50.000">+$50.000</div>
+            </li>
+          </ul>
+        </section>
+
+      </div><!-- /bank-content -->
+
+      <!-- ── SIDEBAR ── -->
+      <aside id="bank-sidebar" role="complementary" aria-label="Servicios adicionales y publicidad">
+
+        <!-- Promo ad -->
+        <div class="sidebar-card sidebar-promo" role="region" aria-label="Oferta de crédito">
+          <h4>⭐ OFERTA EXCLUSIVA</h4>
+          <div class="promo-title">Crédito de consumo 0,89% mensual</div>
+          <div class="promo-sub">Hasta $5.000.000 en 48 cuotas. Aprobación en minutos.</div>
+          <a href="#" class="promo-cta">Solicitar ahora →</a>
+        </div>
+
+        <!-- My products -->
+        <div class="sidebar-card">
+          <h4>Mis Productos</h4>
+          <ul class="sidebar-links">
+            <li><a href="#" class="sidebar-link"><span class="sidebar-link-icon">💳</span> Tarjeta de Débito</a></li>
+            <li><a href="#" class="sidebar-link"><span class="sidebar-link-icon">🏧</span> Cuenta Corriente</a></li>
+            <li><a href="#" class="sidebar-link"><span class="sidebar-link-icon">📈</span> Fondo Mutuo</a></li>
+            <li><a href="#" class="sidebar-link"><span class="sidebar-link-icon">🛡️</span> Seguro de Vida</a></li>
+          </ul>
+        </div>
+
+        <!-- Services -->
+        <div class="sidebar-card">
+          <h4>Servicios</h4>
+          <ul class="sidebar-links">
+            <li><a href="#" class="sidebar-link"><span class="sidebar-link-icon">📱</span> App Móvil</a></li>
+            <li><a href="#" class="sidebar-link"><span class="sidebar-link-icon">📋</span> Estado de cuenta</a></li>
+            <li><a href="#" class="sidebar-link"><span class="sidebar-link-icon">🏠</span> Crédito Hipotecario</a></li>
+            <li><a href="#" class="sidebar-link"><span class="sidebar-link-icon">❓</span> Centro de Ayuda</a></li>
+            <li><a href="#" class="sidebar-link"><span class="sidebar-link-icon">📞</span> Contactar Ejecutivo</a></li>
+          </ul>
+        </div>
+
+        <!-- Another promo -->
+        <div class="sidebar-card" style="background:linear-gradient(135deg,#1a3a6b,#2a5fcc);color:white;border:none;">
+          <h4 style="color:rgba(255,255,255,.7)">🏠 CRÉDITO HIPOTECARIO</h4>
+          <div style="font-size:16px;font-weight:800;margin-bottom:6px;">Tasas desde 3,2% UF</div>
+          <div style="font-size:12px;opacity:.8;margin-bottom:14px;">Simula tu dividendo sin costo</div>
+          <a href="#" style="display:inline-block;background:white;color:#1a3a6b;padding:8px 16px;border-radius:20px;font-size:12px;font-weight:700;">Simular ahora</a>
+        </div>
+
+      </aside>
+
+    </main><!-- /bank-main -->
+
+    <!-- Bank Footer -->
+    <footer id="bank-footer" role="contentinfo">
+      <p>
+        © 2025 BancoChile Digital S.A. — Entidad ficticia creada con fines de prototipo académico (FVIE01 · Innovación y Emprendimiento I)
+        <br />
+        <a href="#">Términos y Condiciones</a>
+        <a href="#">Privacidad</a>
+        <a href="#">CMF Chile</a>
+        <a href="#">Canal de Denuncias</a>
+      </p>
+    </footer>
+
+  </div><!-- /bank-wrapper -->
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SENIORCLICK OVERLAY
+  ═══════════════════════════════════════════════════════════ -->
+  <div id="sc-overlay" role="dialog" aria-modal="true" aria-labelledby="sc-overlay-title" aria-describedby="sc-overlay-desc">
+
+    <!-- SR description -->
+    <p id="sc-overlay-title" class="visually-hidden">Modo SeniorClick — Transferencia bancaria simplificada</p>
+    <p id="sc-overlay-desc" class="visually-hidden">Interfaz de accesibilidad cognitiva para realizar transferencias bancarias paso a paso, en lenguaje simple.</p>
+
+    <!-- Live region for dynamic announcements -->
+    <div aria-live="polite" aria-atomic="true" class="visually-hidden" id="sc-live-region"></div>
+
+    <!-- ── SC Header ── -->
+    <header id="sc-header">
+      <div class="sc-logo" aria-label="BancoChile Digital — Modo SeniorClick activo">
+        <div class="sc-logo-icon" aria-hidden="true">🏦</div>
+        <span>BancoChile Digital</span>
+      </div>
+
+      <div class="sc-mode-badge" aria-label="Modo SeniorClick activo">
+        <span class="sc-mode-dot" aria-hidden="true"></span>
+        Modo SeniorClick
+      </div>
+
+      <button id="sc-deactivate-btn" onclick="deactivateSeniorClick()" aria-label="Desactivar Modo SeniorClick y volver a la página normal del banco">
+        ✕ Volver a la página normal
+      </button>
+    </header>
+
+    <!-- ── SC Body ── -->
+    <main id="sc-body">
+
+      <!-- Progress Bar -->
+      <nav id="sc-progress" aria-label="Progreso de la transferencia">
+        <div class="sc-progress-label">
+          <span class="sc-progress-title" id="sc-progress-title">Paso 1: Elegir destinatario</span>
+          <span class="sc-progress-counter" id="sc-progress-counter" aria-live="polite">Paso 1 de 4</span>
+        </div>
+        <div class="sc-progress-bar-track" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" aria-label="25% completado">
+          <div class="sc-progress-bar-fill" id="sc-progress-fill" style="width:25%"></div>
+        </div>
+      </nav>
+
+      <!-- ══════════════════════════════════
+           STEP 1 — CHOOSE RECIPIENT
+      ══════════════════════════════════ -->
+      <section class="sc-step active" id="sc-step-1" aria-labelledby="step1-heading">
+
+        <h1 class="sc-step-title" id="step1-heading">¿A quién le quiere enviar dinero?</h1>
+        <p class="sc-step-subtitle">Toque una persona o empresa de la lista.</p>
+
+        <div class="sc-help-tip" role="note">
+          <span class="sc-help-tip-icon" aria-hidden="true">💡</span>
+          <span class="sc-help-tip-text">
+            <strong>Tranquilo/a, no se enviará nada todavía.</strong> Primero elegimos a quién, luego el monto, y al final usted revisará todo antes de confirmar.
+          </span>
+        </div>
+
+        <div class="sc-recipients-grid" role="list" aria-label="Lista de destinatarios">
+
+          <button class="sc-recipient-card" role="listitem" id="recipient-1"
+            aria-label="María González, su hija, Banco de Chile"
+            onclick="selectRecipient(1, 'María González', 'Su hija', 'Banco de Chile', '12.345.678-9')">
+            <div class="sc-recipient-avatar" style="background: linear-gradient(135deg,#f472b6,#ec4899);" aria-hidden="true">MG</div>
+            <div class="sc-recipient-info">
+              <div class="sc-recipient-name">María González</div>
+              <div class="sc-recipient-bank">Su hija · Banco de Chile</div>
+            </div>
+            <span class="sc-recipient-check" aria-hidden="true">✅</span>
+          </button>
+
+          <button class="sc-recipient-card" role="listitem" id="recipient-2"
+            aria-label="Carlos Fernández, su amigo, Banco Estado"
+            onclick="selectRecipient(2, 'Carlos Fernández', 'Su amigo', 'Banco Estado', '9.876.543-2')">
+            <div class="sc-recipient-avatar" style="background: linear-gradient(135deg,#60a5fa,#3b82f6);" aria-hidden="true">CF</div>
+            <div class="sc-recipient-info">
+              <div class="sc-recipient-name">Carlos Fernández</div>
+              <div class="sc-recipient-bank">Su amigo · Banco Estado</div>
+            </div>
+            <span class="sc-recipient-check" aria-hidden="true">✅</span>
+          </button>
+
+          <button class="sc-recipient-card" role="listitem" id="recipient-3"
+            aria-label="Farmacia Cruz Verde, BancoChile"
+            onclick="selectRecipient(3, 'Farmacia Cruz Verde', 'Farmacia', 'Banco de Chile', '96.543.210-1')">
+            <div class="sc-recipient-avatar" style="background: linear-gradient(135deg,#34d399,#059669);" aria-hidden="true">🏥</div>
+            <div class="sc-recipient-info">
+              <div class="sc-recipient-name">Farmacia Cruz Verde</div>
+              <div class="sc-recipient-bank">Farmacia · Banco de Chile</div>
+            </div>
+            <span class="sc-recipient-check" aria-hidden="true">✅</span>
+          </button>
+
+          <button class="sc-recipient-card" role="listitem" id="recipient-4"
+            aria-label="Empresa Eléctrica, pago de cuenta de luz, Banco Santander"
+            onclick="selectRecipient(4, 'Empresa Eléctrica', 'Pago de luz', 'Banco Santander', '76.123.456-3')">
+            <div class="sc-recipient-avatar" style="background: linear-gradient(135deg,#fbbf24,#f59e0b);" aria-hidden="true">⚡</div>
+            <div class="sc-recipient-info">
+              <div class="sc-recipient-name">Empresa Eléctrica</div>
+              <div class="sc-recipient-bank">Pago de luz · Banco Santander</div>
+            </div>
+            <span class="sc-recipient-check" aria-hidden="true">✅</span>
+          </button>
+
+        </div>
+
+        <div class="sc-btn-row">
+          <button class="sc-btn sc-btn-secondary" onclick="deactivateSeniorClick()" aria-label="Cancelar y volver a la página normal">
+            ← Cancelar
+          </button>
+          <button class="sc-btn sc-btn-primary" id="step1-next-btn"
+            disabled onclick="goToStep(2)" aria-label="Continuar al siguiente paso">
+            Continuar →
+          </button>
+        </div>
+
+      </section><!-- /step-1 -->
+
+
+      <!-- ══════════════════════════════════
+           STEP 2 — ENTER AMOUNT
+      ══════════════════════════════════ -->
+      <section class="sc-step" id="sc-step-2" aria-labelledby="step2-heading">
+
+        <h1 class="sc-step-title" id="step2-heading">¿Cuánto dinero quiere enviar?</h1>
+        <p class="sc-step-subtitle" id="step2-subtitle">Enviando a: <strong id="step2-recipient-name">—</strong></p>
+
+        <div class="sc-help-tip" role="note">
+          <span class="sc-help-tip-icon" aria-hidden="true">💡</span>
+          <span class="sc-help-tip-text">
+            Use los botones de abajo para ingresar el monto. También puede tocar uno de los montos frecuentes para mayor comodidad.
+          </span>
+        </div>
+
+        <!-- Amount display -->
+        <div class="sc-amount-display" aria-live="polite">
+          <div class="sc-amount-label">Monto a transferir</div>
+          <div class="sc-amount-value" id="sc-amount-display" aria-label="Monto ingresado: cero pesos">$0</div>
+          <div class="sc-amount-error" id="sc-amount-error" role="alert" aria-live="assertive"></div>
+        </div>
+
+        <!-- Presets -->
+        <div class="sc-presets" aria-label="Montos frecuentes">
+          <button class="sc-num-btn preset-row" onclick="setPreset(10000)" aria-label="Ingresar diez mil pesos">$10.000</button>
+          <button class="sc-num-btn preset-row" onclick="setPreset(20000)" aria-label="Ingresar veinte mil pesos">$20.000</button>
+          <button class="sc-num-btn preset-row" onclick="setPreset(50000)" aria-label="Ingresar cincuenta mil pesos">$50.000</button>
+        </div>
+
+        <!-- Numpad -->
+        <div class="sc-numpad" role="group" aria-label="Teclado numérico">
+          <button class="sc-num-btn" onclick="numpadPress('1')" aria-label="Número 1">1</button>
+          <button class="sc-num-btn" onclick="numpadPress('2')" aria-label="Número 2">2</button>
+          <button class="sc-num-btn" onclick="numpadPress('3')" aria-label="Número 3">3</button>
+          <button class="sc-num-btn" onclick="numpadPress('4')" aria-label="Número 4">4</button>
+          <button class="sc-num-btn" onclick="numpadPress('5')" aria-label="Número 5">5</button>
+          <button class="sc-num-btn" onclick="numpadPress('6')" aria-label="Número 6">6</button>
+          <button class="sc-num-btn" onclick="numpadPress('7')" aria-label="Número 7">7</button>
+          <button class="sc-num-btn" onclick="numpadPress('8')" aria-label="Número 8">8</button>
+          <button class="sc-num-btn" onclick="numpadPress('9')" aria-label="Número 9">9</button>
+          <button class="sc-num-btn del-btn" onclick="numpadPress('000')" aria-label="Agregar tres ceros: mil">000</button>
+          <button class="sc-num-btn zero-btn" onclick="numpadPress('0')" aria-label="Número 0">0</button>
+          <button class="sc-num-btn del-btn" onclick="numpadPress('del')" aria-label="Borrar último dígito">⌫</button>
+        </div>
+
+        <div class="sc-btn-row">
+          <button class="sc-btn sc-btn-secondary" onclick="goToStep(1)" aria-label="Volver al paso anterior">
+            ← Volver
+          </button>
+          <button class="sc-btn sc-btn-primary" id="step2-next-btn"
+            onclick="goToStep(3)" aria-label="Revisar y confirmar transferencia">
+            Revisar →
+          </button>
+        </div>
+
+      </section><!-- /step-2 -->
+
+
+      <!-- ══════════════════════════════════
+           STEP 3 — DOUBLE CONFIRMATION
+      ══════════════════════════════════ -->
+      <section class="sc-step" id="sc-step-3" aria-labelledby="step3-heading">
+
+        <h1 class="sc-step-title" id="step3-heading">Revise bien antes de enviar</h1>
+        <p class="sc-step-subtitle">Lea con calma. Si algo no es correcto, puede volver y corregir.</p>
+
+        <div class="sc-help-tip" role="note">
+          <span class="sc-help-tip-icon" aria-hidden="true">🔍</span>
+          <span class="sc-help-tip-text">
+            <strong>Doble Confirmación de Seguridad.</strong> A continuación verá exactamente a quién le enviará el dinero y cuánto. Solo confirme si todo está correcto.
+          </span>
+        </div>
+
+        <!-- Confirmation card -->
+        <div class="sc-confirmation-card" role="region" aria-labelledby="confirm-card-title">
+          <div class="sc-confirm-header">
+            <span class="sc-confirm-icon" aria-hidden="true">📋</span>
+            <div>
+              <div class="sc-confirm-title" id="confirm-card-title">Resumen de su transferencia</div>
+              <div class="sc-confirm-subtitle">Esto es exactamente lo que va a ocurrir</div>
+            </div>
+          </div>
+
+          <dl>
+            <div class="sc-confirm-row">
+              <dt class="sc-confirm-key">👤 Usted le enviará dinero a:</dt>
+              <dd class="sc-confirm-val" id="confirm-recipient">—</dd>
+            </div>
+            <div class="sc-confirm-row">
+              <dt class="sc-confirm-key">🏦 Banco del destinatario:</dt>
+              <dd class="sc-confirm-val" id="confirm-bank">—</dd>
+            </div>
+            <div class="sc-confirm-row">
+              <dt class="sc-confirm-key">🪪 RUT del destinatario:</dt>
+              <dd class="sc-confirm-val" id="confirm-rut">—</dd>
+            </div>
+            <div class="sc-confirm-row">
+              <dt class="sc-confirm-key">💰 Monto que se enviará:</dt>
+              <dd class="sc-confirm-val highlight" id="confirm-amount">—</dd>
+            </div>
+            <div class="sc-confirm-row">
+              <dt class="sc-confirm-key">🏧 Se descontará de su cuenta:</dt>
+              <dd class="sc-confirm-val">Cuenta Vista · ****4821</dd>
+            </div>
+          </dl>
+
+          <div class="sc-confirm-warning" role="note">
+            <span class="sc-confirm-warning-icon" aria-hidden="true">⚠️</span>
+            <span>Una vez que confirme, el dinero saldrá de su cuenta. Si tiene alguna duda, presione <strong>"← Volver"</strong> para revisar de nuevo.</span>
+          </div>
+        </div>
+
+        <div class="sc-btn-row">
+          <button class="sc-btn sc-btn-danger" onclick="goToStep(2)" aria-label="Volver a cambiar el monto o el destinatario">
+            ← Volver a cambiar
+          </button>
+          <button class="sc-btn sc-btn-primary" onclick="goToStep(4)" aria-label="Confirmar y enviar transferencia ahora" style="font-size:20px;">
+            ✅ Confirmar y Enviar
+          </button>
+        </div>
+
+      </section><!-- /step-3 -->
+
+
+      <!-- ══════════════════════════════════
+           STEP 4 — SUCCESS
+      ══════════════════════════════════ -->
+      <section class="sc-step" id="sc-step-4" aria-labelledby="step4-heading">
+
+        <span class="sc-success-animation" aria-hidden="true">🎉</span>
+        <h1 class="sc-success-title" id="step4-heading">¡Transferencia enviada!</h1>
+        <p class="sc-success-subtitle">El dinero llegará en unos minutos. <br/>¡Lo hizo usted solo/a, muy bien!</p>
+
+        <!-- Receipt -->
+        <div class="sc-success-receipt" role="region" aria-label="Comprobante de transferencia">
+          <h2>🧾 Comprobante</h2>
+          <dl>
+            <div class="receipt-row">
+              <dt class="receipt-key">Destinatario</dt>
+              <dd class="receipt-val" id="receipt-recipient">—</dd>
+            </div>
+            <div class="receipt-row">
+              <dt class="receipt-key">Banco</dt>
+              <dd class="receipt-val" id="receipt-bank">—</dd>
+            </div>
+            <div class="receipt-row">
+              <dt class="receipt-key">Monto enviado</dt>
+              <dd class="receipt-val big" id="receipt-amount">—</dd>
+            </div>
+            <div class="receipt-row">
+              <dt class="receipt-key">Fecha y hora</dt>
+              <dd class="receipt-val" id="receipt-datetime">—</dd>
+            </div>
+            <div class="receipt-row">
+              <dt class="receipt-key">N° de operación</dt>
+              <dd class="receipt-val" id="receipt-opnum">—</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="sc-success-actions">
+          <button class="sc-btn sc-btn-success" onclick="resetFlow()" aria-label="Realizar otra transferencia">
+            💸 Otra transferencia
+          </button>
+          <button class="sc-btn sc-btn-secondary" onclick="deactivateSeniorClick()" aria-label="Volver a la página principal del banco">
+            🏠 Volver al inicio
+          </button>
+        </div>
+
+      </section><!-- /step-4 -->
+
+    </main><!-- /sc-body -->
+
+  </div><!-- /sc-overlay -->
+
+
+  <!-- ============================================================
+       JAVASCRIPT — STATE MACHINE
+  ============================================================ -->
+  <script>
+    /* ── State ── */
+    const state = {
+      selectedRecipientId: null,
+      selectedRecipientName: '',
+      selectedRecipientType: '',
+      selectedRecipientBank: '',
+      selectedRecipientRut: '',
+      rawAmount: '',
+      currentStep: 1,
+    };
+
+    /* ── Helpers ── */
+    function formatCLP(raw) {
+      if (!raw || raw === '0') return '$0';
+      return '$' + parseInt(raw, 10).toLocaleString('es-CL');
+    }
+
+    function announce(msg) {
+      const el = document.getElementById('sc-live-region');
+      el.textContent = '';
+      requestAnimationFrame(() => { el.textContent = msg; });
+    }
+
+    function now() {
+      return new Date().toLocaleString('es-CL', {
+        day: '2-digit', month: '2-digit', year: 'numeric',
+        hour: '2-digit', minute: '2-digit',
+      });
+    }
+
+    function randomOpNum() {
+      return 'OP-' + Math.floor(Math.random() * 9000000 + 1000000);
+    }
+
+    /* ── Mode toggling ── */
+    function activateSeniorClick() {
+      const overlay = document.getElementById('sc-overlay');
+      const wrapper = document.getElementById('bank-wrapper');
+      wrapper.classList.add('bank-content-blurred');
+      overlay.classList.add('sc-active');
+      document.body.style.overflow = 'hidden';
+      // Focus management
+      overlay.querySelector('#sc-deactivate-btn').focus();
+      announce('Modo SeniorClick activado. Paso 1 de 4: Elegir destinatario.');
+      resetFlow();
+    }
+
+    function deactivateSeniorClick() {
+      const overlay = document.getElementById('sc-overlay');
+      const wrapper = document.getElementById('bank-wrapper');
+      overlay.classList.remove('sc-active');
+      wrapper.classList.remove('bank-content-blurred');
+      document.body.style.overflow = '';
+      document.getElementById('sc-activate-btn').focus();
+      announce('Modo SeniorClick desactivado. Ha vuelto a la página normal del banco.');
+    }
+
+    /* ── Recipient selection ── */
+    function selectRecipient(id, name, type, bank, rut) {
+      // Clear previous
+      document.querySelectorAll('.sc-recipient-card').forEach(c => {
+        c.classList.remove('selected');
+        c.removeAttribute('aria-pressed');
+      });
+      // Mark new
+      const card = document.getElementById('recipient-' + id);
+      card.classList.add('selected');
+      card.setAttribute('aria-pressed', 'true');
+      // Update state
+      state.selectedRecipientId = id;
+      state.selectedRecipientName = name;
+      state.selectedRecipientType = type;
+      state.selectedRecipientBank = bank;
+      state.selectedRecipientRut = rut;
+      // Enable next
+      document.getElementById('step1-next-btn').disabled = false;
+      announce('Destinatario seleccionado: ' + name + '. Ahora presione Continuar.');
+    }
+
+    /* ── Numpad ── */
+    function numpadPress(key) {
+      if (key === 'del') {
+        state.rawAmount = state.rawAmount.slice(0, -1);
+      } else if (key === '000') {
+        if (state.rawAmount.length > 0) state.rawAmount += '000';
+      } else {
+        // Prevent leading zeros; cap at 9 digits
+        if (state.rawAmount === '0') return;
+        if (state.rawAmount.length >= 9) return;
+        state.rawAmount += key;
+      }
+      updateAmountDisplay();
+    }
+
+    function setPreset(val) {
+      state.rawAmount = String(val);
+      updateAmountDisplay();
+    }
+
+    function updateAmountDisplay() {
+      const display = document.getElementById('sc-amount-display');
+      const errEl = document.getElementById('sc-amount-error');
+      const amount = state.rawAmount;
+      const formatted = amount ? formatCLP(amount) : '$0';
+      display.textContent = formatted;
+      display.classList.toggle('has-value', !!amount && amount !== '0');
+      display.setAttribute('aria-label', 'Monto ingresado: ' + (formatted));
+      errEl.textContent = '';
+    }
+
+    /* ── Navigation ── */
+    function goToStep(step) {
+      // Validation
+      if (step === 2 && !state.selectedRecipientId) {
+        announce('Por favor, elija un destinatario antes de continuar.');
+        return;
+      }
+      if (step === 3) {
+        const amount = parseInt(state.rawAmount || '0', 10);
+        const errEl = document.getElementById('sc-amount-error');
+        if (!amount || amount < 1) {
+          errEl.textContent = '⚠️ Por favor ingrese un monto mayor a $0 antes de continuar.';
+          announce('El monto no puede estar vacío o ser cero. Por favor ingrese un monto.');
+          return;
+        }
+        if (amount > 1843620) {
+          errEl.textContent = '⚠️ El monto supera su saldo disponible ($1.843.620).';
+          announce('El monto ingresado supera su saldo disponible.');
+          return;
+        }
+        // Populate confirmation screen
+        populateConfirmation();
+      }
+      if (step === 4) {
+        // Populate receipt
+        populateReceipt();
+      }
+
+      // Hide current, show new
+      document.querySelectorAll('.sc-step').forEach(s => s.classList.remove('active'));
+      document.getElementById('sc-step-' + step).classList.add('active');
+
+      // Update progress bar
+      updateProgress(step);
+      state.currentStep = step;
+
+      // Scroll to top of overlay
+      document.getElementById('sc-body').scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Focus heading of new step
+      const heading = document.querySelector('#sc-step-' + step + ' h1');
+      if (heading) { heading.setAttribute('tabindex', '-1'); heading.focus(); }
+
+      // Announce step
+      const labels = ['', 'Paso 1: Elegir destinatario', 'Paso 2: Ingresar monto', 'Paso 3: Doble confirmación de seguridad', 'Paso 4: Transferencia completada con éxito'];
+      announce(labels[step]);
+    }
+
+    function updateProgress(step) {
+      const pct = (step / 4) * 100;
+      const fill = document.getElementById('sc-progress-fill');
+      const title = document.getElementById('sc-progress-title');
+      const counter = document.getElementById('sc-progress-counter');
+      const bar = fill.parentElement;
+      const titles = [
+        '', 'Paso 1: Elegir destinatario',
+        'Paso 2: Ingresar monto',
+        'Paso 3: Confirmar transferencia',
+        '✅ ¡Transferencia enviada!'
+      ];
+      fill.style.width = pct + '%';
+      bar.setAttribute('aria-valuenow', pct);
+      title.textContent = titles[step];
+      counter.textContent = step < 4 ? ('Paso ' + step + ' de 4') : '¡Listo!';
+
+      // Also update step2 recipient name
+      if (step >= 2) {
+        document.getElementById('step2-recipient-name').textContent = state.selectedRecipientName;
+      }
+    }
+
+    function populateConfirmation() {
+      document.getElementById('confirm-recipient').textContent = state.selectedRecipientName + ' (' + state.selectedRecipientType + ')';
+      document.getElementById('confirm-bank').textContent = state.selectedRecipientBank;
+      document.getElementById('confirm-rut').textContent = state.selectedRecipientRut;
+      document.getElementById('confirm-amount').textContent = formatCLP(state.rawAmount);
+    }
+
+    function populateReceipt() {
+      document.getElementById('receipt-recipient').textContent = state.selectedRecipientName;
+      document.getElementById('receipt-bank').textContent = state.selectedRecipientBank;
+      document.getElementById('receipt-amount').textContent = formatCLP(state.rawAmount);
+      document.getElementById('receipt-datetime').textContent = now();
+      document.getElementById('receipt-opnum').textContent = randomOpNum();
+    }
+
+    function resetFlow() {
+      state.selectedRecipientId = null;
+      state.selectedRecipientName = '';
+      state.selectedRecipientType = '';
+      state.selectedRecipientBank = '';
+      state.selectedRecipientRut = '';
+      state.rawAmount = '';
+      state.currentStep = 1;
+
+      document.querySelectorAll('.sc-recipient-card').forEach(c => {
+        c.classList.remove('selected');
+        c.removeAttribute('aria-pressed');
+      });
+      document.getElementById('step1-next-btn').disabled = true;
+      document.getElementById('sc-amount-display').textContent = '$0';
+      document.getElementById('sc-amount-display').classList.remove('has-value');
+      document.getElementById('sc-amount-error').textContent = '';
+
+      document.querySelectorAll('.sc-step').forEach(s => s.classList.remove('active'));
+      document.getElementById('sc-step-1').classList.add('active');
+      updateProgress(1);
+    }
+
+    /* ── Keyboard support ── */
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && document.getElementById('sc-overlay').classList.contains('sc-active')) {
+        deactivateSeniorClick();
+      }
+    });
+  </script>
+
+</body>
+</html>
