@@ -15,14 +15,14 @@
     ============================================================ */
     :root {
       /* Bank normal palette (BancoEstado) */
-      --bank-primary:    #0257A0; /* BancoEstado Blue */
-      --bank-secondary:  #ee801d; /* BancoEstado Orange */
-      --bank-accent:     #ee801d; /* BancoEstado Orange */
+      --bank-primary:    #004dff; /* BancoEstado Azul */
+      --bank-secondary:  #ff7900; /* BancoEstado Naranjo */
+      --bank-accent:     #ff7900; /* BancoEstado Naranjo */
       --bank-bg:         #f4f6f9;
       --bank-surface:    #ffffff;
-      --bank-text:       #323e48; /* Tuna Dark Grey */
-      --bank-muted:      #5b6f80;
-      --bank-border:     #d1dbe5;
+      --bank-text:       #343e46; /* Gris BancoEstado */
+      --bank-muted:      #5c5c5c;
+      --bank-border:     #dce2ed;
 
       /* SeniorClick palette */
       --sc-primary:      #0a7c59;
@@ -1134,7 +1134,7 @@
     <main id="sc-body">
 
       <!-- Progress Bar -->
-      <nav id="sc-progress" aria-label="Progreso de la transferencia">
+      <nav id="sc-progress" aria-label="Progreso de la transferencia" style="display: none;">
         <div class="sc-progress-label">
           <span class="sc-progress-title" id="sc-progress-title">Paso 1: Elegir destinatario</span>
           <span class="sc-progress-counter" id="sc-progress-counter" aria-live="polite">Paso 1 de 4</span>
@@ -1145,9 +1145,78 @@
       </nav>
 
       <!-- ══════════════════════════════════
+           STEP 0 — CHOOSE BANK
+      ══════════════════════════════════ -->
+      <section class="sc-step active" id="sc-step-0" aria-labelledby="step0-heading">
+        <h1 class="sc-step-title" id="step0-heading">¿En qué banco tiene su cuenta?</h1>
+        <p class="sc-step-subtitle">Toque su banco para iniciar la asistencia con sus colores familiares.</p>
+
+        <div class="sc-help-tip" role="note">
+          <span class="sc-help-tip-icon" aria-hidden="true">🏦</span>
+          <span class="sc-help-tip-text">
+            El asistente adaptará sus colores para que le resulten conocidos y seguros.
+          </span>
+        </div>
+
+        <div class="sc-recipients-grid" role="list" aria-label="Lista de bancos">
+
+          <button class="sc-recipient-card" role="listitem" id="bank-select-estado"
+            style="border-color: #ff7900; border-width: 3px;"
+            onclick="selectBank('bancoestado')">
+            <div class="sc-recipient-avatar" style="background: linear-gradient(135deg, #004dff 70%, #ff7900 70%); font-size: 20px; font-weight:800;" aria-hidden="true">BE</div>
+            <div class="sc-recipient-info">
+              <div class="sc-recipient-name">BancoEstado</div>
+              <div class="sc-recipient-bank">CuentaRUT, Cuenta Vista o Corriente</div>
+            </div>
+            <span class="sc-recipient-check" aria-hidden="true">➔</span>
+          </button>
+
+          <button class="sc-recipient-card" role="listitem" id="bank-select-chile"
+            style="border-color: #0a2560; border-width: 3px;"
+            onclick="selectBank('bancochile')">
+            <div class="sc-recipient-avatar" style="background: linear-gradient(135deg, #0a2560 70%, #e8621a 70%); font-size: 20px; font-weight:800;" aria-hidden="true">BC</div>
+            <div class="sc-recipient-info">
+              <div class="sc-recipient-name">Banco de Chile</div>
+              <div class="sc-recipient-bank">Cuenta Vista, Corriente o Banconexión</div>
+            </div>
+            <span class="sc-recipient-check" aria-hidden="true">➔</span>
+          </button>
+
+          <button class="sc-recipient-card" role="listitem" id="bank-select-santander"
+            style="border-color: #ec0000; border-width: 3px;"
+            onclick="selectBank('santander')">
+            <div class="sc-recipient-avatar" style="background: #ec0000; font-size: 20px; font-weight:800;" aria-hidden="true">S</div>
+            <div class="sc-recipient-info">
+              <div class="sc-recipient-name">Banco Santander</div>
+              <div class="sc-recipient-bank">Supergiro, Cuenta Vista o Corriente</div>
+            </div>
+            <span class="sc-recipient-check" aria-hidden="true">➔</span>
+          </button>
+
+          <button class="sc-recipient-card" role="listitem" id="bank-select-bci"
+            style="border-color: #006738; border-width: 3px;"
+            onclick="selectBank('bci')">
+            <div class="sc-recipient-avatar" style="background: #006738; font-size: 20px; font-weight:800;" aria-hidden="true">Bci</div>
+            <div class="sc-recipient-info">
+              <div class="sc-recipient-name">Bci</div>
+              <div class="sc-recipient-bank">Cuenta Corriente o Vista Bci / MACH</div>
+            </div>
+            <span class="sc-recipient-check" aria-hidden="true">➔</span>
+          </button>
+
+        </div>
+
+        <div class="sc-btn-row">
+          <button class="sc-btn sc-btn-secondary" onclick="deactivateSeniorClick()" aria-label="Cancelar y volver a la página normal">
+            ← Cancelar y volver
+          </button>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════
            STEP 1 — CHOOSE RECIPIENT
       ══════════════════════════════════ -->
-      <section class="sc-step active" id="sc-step-1" aria-labelledby="step1-heading">
+      <section class="sc-step" id="sc-step-1" aria-labelledby="step1-heading">
 
         <h1 class="sc-step-title" id="step1-heading">¿A quién le quiere enviar dinero?</h1>
         <p class="sc-step-subtitle">Toque una persona o empresa de la lista.</p>
@@ -1208,8 +1277,8 @@
         </div>
 
         <div class="sc-btn-row">
-          <button class="sc-btn sc-btn-secondary" onclick="deactivateSeniorClick()" aria-label="Cancelar y volver a la página normal">
-            ← Cancelar
+          <button class="sc-btn sc-btn-secondary" onclick="goToStep(0)" aria-label="Volver a seleccionar su banco">
+            ← Cambiar Banco
           </button>
           <button class="sc-btn sc-btn-primary" id="step1-next-btn"
             disabled onclick="goToStep(2)" aria-label="Continuar al siguiente paso">
@@ -1322,7 +1391,7 @@
             </div>
             <div class="sc-confirm-row">
               <dt class="sc-confirm-key">🏧 Se descontará de su cuenta:</dt>
-              <dd class="sc-confirm-val">Cuenta Vista · ****4821</dd>
+              <dd class="sc-confirm-val" id="sc-confirm-source-bank">Cuenta Vista · BancoEstado (****4821)</dd>
             </div>
           </dl>
 
@@ -1370,6 +1439,10 @@
               <dd class="receipt-val big" id="receipt-amount">—</dd>
             </div>
             <div class="receipt-row">
+              <dt class="receipt-key">Desde cuenta</dt>
+              <dd class="receipt-val" id="receipt-source-bank">—</dd>
+            </div>
+            <div class="receipt-row">
               <dt class="receipt-key">Fecha y hora</dt>
               <dd class="receipt-val" id="receipt-datetime">—</dd>
             </div>
@@ -1402,14 +1475,97 @@
   <script>
     /* ── State ── */
     const state = {
+      selectedBankKey: 'bancoestado',
+      selectedBankName: 'BancoEstado',
       selectedRecipientId: null,
       selectedRecipientName: '',
       selectedRecipientType: '',
       selectedRecipientBank: '',
       selectedRecipientRut: '',
       rawAmount: '',
-      currentStep: 1,
+      currentStep: 0,
     };
+
+    const themes = {
+      bancoestado: {
+        primary: '#004dff',
+        primaryDk: '#0036b3',
+        primaryLt: '#f0f4ff',
+        accent: '#ff7900',
+        bg: '#f0f4ff',
+        border: '#a2c0ff',
+        logoText: 'BancoEstado',
+        logoIcon: 'BE',
+        logoStyle: 'background: linear-gradient(135deg, #004dff 70%, #ff7900 70%);'
+      },
+      bancochile: {
+        primary: '#0a2560',
+        primaryDk: '#06173a',
+        primaryLt: '#edf1f7',
+        accent: '#e8621a',
+        bg: '#edf1f7',
+        border: '#d0d9ea',
+        logoText: 'Banco de Chile',
+        logoIcon: 'BC',
+        logoStyle: 'background: linear-gradient(135deg, #0a2560 70%, #e8621a 70%);'
+      },
+      santander: {
+        primary: '#ec0000',
+        primaryDk: '#b30000',
+        primaryLt: '#fff5f5',
+        accent: '#ec0000',
+        bg: '#fff5f5',
+        border: '#ffccd0',
+        logoText: 'Santander',
+        logoIcon: 'S',
+        logoStyle: 'background: #ec0000;'
+      },
+      bci: {
+        primary: '#006738',
+        primaryDk: '#004727',
+        primaryLt: '#f0f7f2',
+        accent: '#78be20',
+        bg: '#f0f7f2',
+        border: '#add5bf',
+        logoText: 'Bci',
+        logoIcon: 'Bci',
+        logoStyle: 'background: #006738;'
+      }
+    };
+
+    function selectBank(bankKey) {
+      const t = themes[bankKey];
+      if (!t) return;
+
+      state.selectedBankKey = bankKey;
+      state.selectedBankName = t.logoText;
+
+      const root = document.documentElement;
+      root.style.setProperty('--sc-primary', t.primary);
+      root.style.setProperty('--sc-primary-dk', t.primaryDk);
+      root.style.setProperty('--sc-primary-lt', t.primaryLt);
+      root.style.setProperty('--sc-accent', t.accent);
+      root.style.setProperty('--sc-bg', t.bg);
+      root.style.setProperty('--sc-border', t.border);
+
+      // Update header logo
+      const logoText = document.querySelector('.sc-logo span');
+      const logoIcon = document.querySelector('.sc-logo-icon');
+      logoText.textContent = t.logoText;
+      logoIcon.textContent = t.logoIcon;
+      logoIcon.setAttribute('style', t.logoStyle);
+
+      // Update source bank in step 3 card
+      const sourceBankVal = document.getElementById('sc-confirm-source-bank');
+      if (sourceBankVal) {
+        sourceBankVal.textContent = 'Cuenta Vista · ' + t.logoText + ' (****4821)';
+      }
+
+      announce('Ha seleccionado ' + t.logoText + '. Cargando asistente...');
+      setTimeout(() => {
+        goToStep(1);
+      }, 400);
+    }
 
     /* ── Helpers ── */
     function formatCLP(raw) {
@@ -1443,7 +1599,7 @@
       document.body.style.overflow = 'hidden';
       // Focus management
       overlay.querySelector('#sc-deactivate-btn').focus();
-      announce('Modo SeniorClick activado. Paso 1 de 4: Elegir destinatario.');
+      announce('Modo SeniorClick activado. Por favor seleccione su banco.');
       resetFlow();
     }
 
@@ -1543,7 +1699,12 @@
       document.getElementById('sc-step-' + step).classList.add('active');
 
       // Update progress bar
-      updateProgress(step);
+      if (step === 0) {
+        document.getElementById('sc-progress').style.display = 'none';
+      } else {
+        document.getElementById('sc-progress').style.display = 'block';
+        updateProgress(step);
+      }
       state.currentStep = step;
 
       // Scroll to top of overlay
@@ -1554,7 +1715,13 @@
       if (heading) { heading.setAttribute('tabindex', '-1'); heading.focus(); }
 
       // Announce step
-      const labels = ['', 'Paso 1: Elegir destinatario', 'Paso 2: Ingresar monto', 'Paso 3: Doble confirmación de seguridad', 'Paso 4: Transferencia completada con éxito'];
+      const labels = [
+        'Paso 0: Seleccionar su banco',
+        'Paso 1: Elegir destinatario',
+        'Paso 2: Ingresar monto',
+        'Paso 3: Doble confirmación de seguridad',
+        'Paso 4: Transferencia completada con éxito'
+      ];
       announce(labels[step]);
     }
 
@@ -1592,6 +1759,7 @@
       document.getElementById('receipt-recipient').textContent = state.selectedRecipientName;
       document.getElementById('receipt-bank').textContent = state.selectedRecipientBank;
       document.getElementById('receipt-amount').textContent = formatCLP(state.rawAmount);
+      document.getElementById('receipt-source-bank').textContent = 'Cuenta Vista · ' + state.selectedBankName;
       document.getElementById('receipt-datetime').textContent = now();
       document.getElementById('receipt-opnum').textContent = randomOpNum();
     }
@@ -1603,7 +1771,7 @@
       state.selectedRecipientBank = '';
       state.selectedRecipientRut = '';
       state.rawAmount = '';
-      state.currentStep = 1;
+      state.currentStep = 0;
 
       document.querySelectorAll('.sc-recipient-card').forEach(c => {
         c.classList.remove('selected');
@@ -1615,8 +1783,8 @@
       document.getElementById('sc-amount-error').textContent = '';
 
       document.querySelectorAll('.sc-step').forEach(s => s.classList.remove('active'));
-      document.getElementById('sc-step-1').classList.add('active');
-      updateProgress(1);
+      document.getElementById('sc-step-0').classList.add('active');
+      goToStep(0);
     }
 
     /* ── Keyboard support ── */
