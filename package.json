@@ -1,0 +1,24 @@
+{
+  "name": "senior-click",
+  "version": "1.0.0",
+  "description": "**Asignatura:** Innovación y Emprendimiento I (FVIE01)   **Proyecto:** SeniorClick — Capa de Accesibilidad Cognitiva Bancaria",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "live-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexispferrada-wq/senior-click.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexispferrada-wq/senior-click/issues"
+  },
+  "homepage": "https://github.com/alexispferrada-wq/senior-click#readme",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}

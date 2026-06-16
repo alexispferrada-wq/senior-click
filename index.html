@@ -14,15 +14,15 @@
        DESIGN TOKENS & RESET
     ============================================================ */
     :root {
-      /* Bank normal palette (BancoEstado) */
-      --bank-primary:    #004dff; /* BancoEstado Azul */
-      --bank-secondary:  #ff7900; /* BancoEstado Naranjo */
-      --bank-accent:     #ff7900; /* BancoEstado Naranjo */
-      --bank-bg:         #f4f6f9;
+      /* Bank normal palette */
+      --bank-primary:    #ff7900;
+      --bank-secondary:  #ff7900;
+      --bank-accent:     #ff7900;
+      --bank-bg:         #fff7f0;
       --bank-surface:    #ffffff;
-      --bank-text:       #343e46; /* Gris BancoEstado */
+      --bank-text:       #343e46;
       --bank-muted:      #5c5c5c;
-      --bank-border:     #dce2ed;
+      --bank-border:     #ffe0cc;
 
       /* SeniorClick palette */
       --sc-primary:      #0a7c59;
@@ -132,13 +132,13 @@
     }
     .bank-logo-icon {
       width: 40px; height: 40px;
-      background: linear-gradient(135deg, var(--bank-primary), var(--bank-secondary));
+      background: var(--bank-primary);
       border-radius: 10px;
       display: flex; align-items: center; justify-content: center;
       color: white; font-size: 18px; font-weight: 900;
     }
     .bank-logo-name { color: var(--bank-primary); }
-    .bank-logo-name span { color: var(--bank-accent); }
+    .bank-logo-name span { color: var(--bank-primary); }
 
     /* Nav */
     #bank-nav { display: flex; align-items: center; gap: 2px; }
@@ -240,7 +240,7 @@
 
     /* ── Hero Banner ── */
     #bank-hero {
-      background: linear-gradient(135deg, var(--bank-primary) 0%, #1a3a8f 60%, #2a5fcc 100%);
+      background: var(--bank-primary);
       border-radius: var(--r-lg);
       padding: 32px;
       color: white;
@@ -859,6 +859,24 @@
     }
 
     /* ============================================================
+       AUTO POPUP SENIORCLICK
+    ============================================================ */
+    .sc-auto-popup {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 3000;
+      display: flex; align-items: center; justify-content: center;
+      animation: fadeIn var(--t-med) both;
+    }
+    .sc-auto-popup-content {
+      background: white; border-radius: var(--r-xl); padding: 40px; max-width: 480px;
+      text-align: center; box-shadow: var(--shadow-xl);
+      border: 4px solid var(--sc-primary);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* ============================================================
        BANK BLUR WHEN SC IS OPEN
     ============================================================ */
     .bank-content-blurred {
@@ -871,6 +889,21 @@
 </head>
 
 <body>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       AUTO POPUP SENIORCLICK
+  ═══════════════════════════════════════════════════════════ -->
+  <div id="sc-auto-popup" class="sc-auto-popup" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="popup-heading">
+    <div class="sc-auto-popup-content">
+      <div style="font-size: 60px; margin-bottom: 16px;">👴</div>
+      <h2 id="popup-heading" style="font-size: 26px; font-weight: 800; color: var(--sc-text); margin-bottom: 12px;">¿Desea simplificar esta página?</h2>
+      <p style="font-size: 18px; color: var(--sc-muted); margin-bottom: 32px; line-height: 1.4;">Hemos detectado que puede beneficiarse del <strong>Modo SeniorClick</strong>. Esto hará las letras más grandes y el proceso mucho más fácil y seguro.</p>
+      <div class="sc-btn-row" style="margin-top: 0;">
+        <button class="sc-btn sc-btn-secondary" onclick="closePopup()" style="font-size:18px; padding: 14px 24px;">No, gracias</button>
+        <button class="sc-btn sc-btn-primary" onclick="closePopup(); activateSeniorClick()" style="font-size:18px; padding: 14px 24px; background: var(--sc-primary); color: white;">Activar SeniorClick</button>
+      </div>
+    </div>
+  </div>
 
   <!-- ═══════════════════════════════════════════════════════════
        BANK NORMAL MODE — WRAPPER
@@ -942,9 +975,6 @@
           <p>Administra tus finanzas, realiza transferencias y accede a todos tus productos desde un solo lugar. Tu seguridad es nuestra prioridad.</p>
           <div class="bank-hero-btns">
             <button class="bank-hero-btn primary-btn">Nueva Transferencia</button>
-            <button class="bank-hero-btn">Pagar Cuenta</button>
-            <button class="bank-hero-btn">Cargar Bip/BioCard</button>
-            <button class="bank-hero-btn">Obtener Crédito</button>
           </div>
         </section>
 
@@ -964,26 +994,10 @@
         <!-- Quick Actions -->
         <section class="bank-quick-actions" aria-labelledby="qa-heading">
           <h3 id="qa-heading">Acciones rápidas</h3>
-          <div class="qa-grid" role="list">
+          <div class="qa-grid" role="list" style="grid-template-columns: 1fr;">
             <button class="qa-item" role="listitem">
               <span class="qa-icon" aria-hidden="true">💸</span>
               Transferir
-            </button>
-            <button class="qa-item" role="listitem">
-              <span class="qa-icon" aria-hidden="true">📄</span>
-              Pagar
-            </button>
-            <button class="qa-item" role="listitem">
-              <span class="qa-icon" aria-hidden="true">💳</span>
-              Tarjeta
-            </button>
-            <button class="qa-item" role="listitem">
-              <span class="qa-icon" aria-hidden="true">📊</span>
-              Cartola
-            </button>
-            <button class="qa-item" role="listitem">
-              <span class="qa-icon" aria-hidden="true">🏦</span>
-              Depósito
             </button>
           </div>
         </section>
@@ -1041,45 +1055,19 @@
       </div><!-- /bank-content -->
 
       <!-- ── SIDEBAR ── -->
-      <aside id="bank-sidebar" role="complementary" aria-label="Servicios adicionales y publicidad">
-
-        <!-- Promo ad -->
-        <div class="sidebar-card sidebar-promo" role="region" aria-label="Oferta de crédito">
-          <h4>⭐ OFERTA EXCLUSIVA</h4>
-          <div class="promo-title">Crédito de consumo 0,89% mensual</div>
-          <div class="promo-sub">Hasta $5.000.000 en 48 cuotas. Aprobación en minutos.</div>
-          <a href="#" class="promo-cta">Solicitar ahora →</a>
-        </div>
-
-        <!-- My products -->
-        <div class="sidebar-card">
-          <h4>Mis Productos</h4>
+      <aside id="bank-sidebar" role="complementary" aria-label="Accesos Directos">
+        
+        <!-- Transfer Section Only -->
+        <div class="sidebar-card" style="border: 2px solid var(--bank-primary);">
+          <h4 style="color: var(--bank-primary);">TRANSFERENCIAS</h4>
+          <div style="font-size:14px; color:var(--bank-text); margin-bottom:14px;">
+            Envíe dinero a terceros de forma rápida y segura.
+          </div>
           <ul class="sidebar-links">
-            <li><a href="#" class="sidebar-link"><span class="sidebar-link-icon">💳</span> Tarjeta de Débito</a></li>
-            <li><a href="#" class="sidebar-link"><span class="sidebar-link-icon">🏧</span> Cuenta Corriente</a></li>
-            <li><a href="#" class="sidebar-link"><span class="sidebar-link-icon">📈</span> Fondo Mutuo</a></li>
-            <li><a href="#" class="sidebar-link"><span class="sidebar-link-icon">🛡️</span> Seguro de Vida</a></li>
+            <li><a href="#" class="sidebar-link"><span class="sidebar-link-icon">👤</span> Nuevo Destinatario</a></li>
+            <li><a href="#" class="sidebar-link"><span class="sidebar-link-icon">👥</span> Destinatarios Guardados</a></li>
+            <li><a href="#" class="sidebar-link"><span class="sidebar-link-icon">🔄</span> Entre Mis Cuentas</a></li>
           </ul>
-        </div>
-
-        <!-- Services -->
-        <div class="sidebar-card">
-          <h4>Servicios</h4>
-          <ul class="sidebar-links">
-            <li><a href="#" class="sidebar-link"><span class="sidebar-link-icon">📱</span> App Móvil</a></li>
-            <li><a href="#" class="sidebar-link"><span class="sidebar-link-icon">📋</span> Estado de cuenta</a></li>
-            <li><a href="#" class="sidebar-link"><span class="sidebar-link-icon">🏠</span> Crédito Hipotecario</a></li>
-            <li><a href="#" class="sidebar-link"><span class="sidebar-link-icon">❓</span> Centro de Ayuda</a></li>
-            <li><a href="#" class="sidebar-link"><span class="sidebar-link-icon">📞</span> Contactar Ejecutivo</a></li>
-          </ul>
-        </div>
-
-        <!-- Another promo -->
-        <div class="sidebar-card" style="background:linear-gradient(135deg,#1a3a6b,#2a5fcc);color:white;border:none;">
-          <h4 style="color:rgba(255,255,255,.7)">🏠 CRÉDITO HIPOTECARIO</h4>
-          <div style="font-size:16px;font-weight:800;margin-bottom:6px;">Tasas desde 3,2% UF</div>
-          <div style="font-size:12px;opacity:.8;margin-bottom:14px;">Simula tu dividendo sin costo</div>
-          <a href="#" style="display:inline-block;background:white;color:#1a3a6b;padding:8px 16px;border-radius:20px;font-size:12px;font-weight:700;">Simular ahora</a>
         </div>
 
       </aside>
@@ -1163,7 +1151,7 @@
           <button class="sc-recipient-card" role="listitem" id="bank-select-estado"
             style="border-color: #ff7900; border-width: 3px;"
             onclick="selectBank('bancoestado')">
-            <div class="sc-recipient-avatar" style="background: linear-gradient(135deg, #004dff 70%, #ff7900 70%); font-size: 20px; font-weight:800;" aria-hidden="true">BE</div>
+            <div class="sc-recipient-avatar" style="background: #ff7900; font-size: 20px; font-weight:800;" aria-hidden="true">BE</div>
             <div class="sc-recipient-info">
               <div class="sc-recipient-name">BancoEstado</div>
               <div class="sc-recipient-bank">CuentaRUT, Cuenta Vista o Corriente</div>
@@ -1174,7 +1162,7 @@
           <button class="sc-recipient-card" role="listitem" id="bank-select-chile"
             style="border-color: #0a2560; border-width: 3px;"
             onclick="selectBank('bancochile')">
-            <div class="sc-recipient-avatar" style="background: linear-gradient(135deg, #0a2560 70%, #e8621a 70%); font-size: 20px; font-weight:800;" aria-hidden="true">BC</div>
+            <div class="sc-recipient-avatar" style="background: #0a2560; font-size: 20px; font-weight:800;" aria-hidden="true">BC</div>
             <div class="sc-recipient-info">
               <div class="sc-recipient-name">Banco de Chile</div>
               <div class="sc-recipient-bank">Cuenta Vista, Corriente o Banconexión</div>
@@ -1252,31 +1240,17 @@
             <span class="sc-recipient-check" aria-hidden="true">✅</span>
           </button>
 
-          <button class="sc-recipient-card" role="listitem" id="recipient-3"
-            aria-label="Farmacia Cruz Verde, BancoChile"
-            onclick="selectRecipient(3, 'Farmacia Cruz Verde', 'Farmacia', 'Banco de Chile', '96.543.210-1')">
-            <div class="sc-recipient-avatar" style="background: linear-gradient(135deg,#34d399,#059669);" aria-hidden="true">🏥</div>
-            <div class="sc-recipient-info">
-              <div class="sc-recipient-name">Farmacia Cruz Verde</div>
-              <div class="sc-recipient-bank">Farmacia · Banco de Chile</div>
-            </div>
-            <span class="sc-recipient-check" aria-hidden="true">✅</span>
-          </button>
 
-          <button class="sc-recipient-card" role="listitem" id="recipient-4"
-            aria-label="Empresa Eléctrica, pago de cuenta de luz, Banco Santander"
-            onclick="selectRecipient(4, 'Empresa Eléctrica', 'Pago de luz', 'Banco Santander', '76.123.456-3')">
-            <div class="sc-recipient-avatar" style="background: linear-gradient(135deg,#fbbf24,#f59e0b);" aria-hidden="true">⚡</div>
-            <div class="sc-recipient-info">
-              <div class="sc-recipient-name">Empresa Eléctrica</div>
-              <div class="sc-recipient-bank">Pago de luz · Banco Santander</div>
-            </div>
-            <span class="sc-recipient-check" aria-hidden="true">✅</span>
-          </button>
 
         </div>
 
-        <div class="sc-btn-row">
+        <div style="margin-top: 24px; text-align: center;">
+          <button class="sc-btn sc-btn-secondary" onclick="goToStep('new-account')" style="width: 100%; border: 2.5px dashed var(--sc-primary); color: var(--sc-primary); padding: 24px; font-size: 22px;">
+            ➕ Agregar nueva cuenta (Nuevo destinatario)
+          </button>
+        </div>
+
+        <div class="sc-btn-row" style="margin-top: 40px;">
           <button class="sc-btn sc-btn-secondary" onclick="goToStep(0)" aria-label="Volver a seleccionar su banco">
             ← Cambiar Banco
           </button>
@@ -1287,6 +1261,53 @@
         </div>
 
       </section><!-- /step-1 -->
+
+      <!-- ══════════════════════════════════
+           STEP: NEW ACCOUNT (ANTI-SCAM)
+      ══════════════════════════════════ -->
+      <section class="sc-step" id="sc-step-new-account" aria-labelledby="new-account-heading">
+        <h1 class="sc-step-title" id="new-account-heading">Agregar nueva cuenta</h1>
+        <p class="sc-step-subtitle">Llene los datos con cuidado para guardar a una nueva persona o empresa.</p>
+
+        <div class="sc-confirm-warning" role="note" style="border-color: #dc2626; background: #fef2f2; color: #991b1b; margin-bottom: 28px; padding: 20px;">
+          <span class="sc-confirm-warning-icon" aria-hidden="true" style="font-size: 32px;">🛑</span>
+          <span style="font-size: 18px; line-height: 1.5;"><strong>Prevención de Estafas:</strong> Solo agregue personas que usted conozca. Si alguien lo está llamando por teléfono y lo presiona para agregar una cuenta rápido, <strong>cuelgue</strong>, podría ser una estafa.</span>
+        </div>
+
+        <div style="background: white; padding: 28px; border-radius: var(--r-xl); border: 3px solid var(--sc-border);">
+          <div style="margin-bottom: 20px;">
+            <label style="display: block; font-size: 19px; font-weight: 700; margin-bottom: 10px; color: var(--sc-text);">Nombre completo de la persona o empresa:</label>
+            <input type="text" id="new-name" placeholder="Ej: Juan Pérez" style="width: 100%; font-size: 22px; padding: 16px; border: 2.5px solid var(--sc-border); border-radius: var(--r-md); outline: none;">
+          </div>
+          <div style="margin-bottom: 20px;">
+            <label style="display: block; font-size: 19px; font-weight: 700; margin-bottom: 10px; color: var(--sc-text);">RUT:</label>
+            <input type="text" id="new-rut" placeholder="Ej: 12.345.678-9" style="width: 100%; font-size: 22px; padding: 16px; border: 2.5px solid var(--sc-border); border-radius: var(--r-md); outline: none;">
+          </div>
+          <div style="margin-bottom: 20px;">
+            <label style="display: block; font-size: 19px; font-weight: 700; margin-bottom: 10px; color: var(--sc-text);">Banco:</label>
+            <select id="new-bank" style="width: 100%; font-size: 22px; padding: 16px; border: 2.5px solid var(--sc-border); border-radius: var(--r-md); outline: none; background: white;">
+              <option>Seleccione un banco...</option>
+              <option>BancoEstado</option>
+              <option>Banco de Chile</option>
+              <option>Banco Santander</option>
+              <option>Bci</option>
+            </select>
+          </div>
+          <div style="margin-bottom: 20px;">
+            <label style="display: block; font-size: 19px; font-weight: 700; margin-bottom: 10px; color: var(--sc-text);">Número de Cuenta:</label>
+            <input type="number" id="new-account-num" placeholder="Ej: 123456789" style="width: 100%; font-size: 22px; padding: 16px; border: 2.5px solid var(--sc-border); border-radius: var(--r-md); outline: none;">
+          </div>
+        </div>
+
+        <div class="sc-btn-row">
+          <button class="sc-btn sc-btn-danger" onclick="goToStep(1)" aria-label="Cancelar y volver">
+            ← Cancelar
+          </button>
+          <button class="sc-btn sc-btn-success" onclick="saveNewAccount()" aria-label="Guardar nueva cuenta">
+            💾 Guardar Cuenta
+          </button>
+        </div>
+      </section>
 
 
       <!-- ══════════════════════════════════
@@ -1488,26 +1509,26 @@
 
     const themes = {
       bancoestado: {
-        primary: '#004dff',
-        primaryDk: '#0036b3',
-        primaryLt: '#f0f4ff',
+        primary: '#ff7900',
+        primaryDk: '#cc6100',
+        primaryLt: '#fff7f0',
         accent: '#ff7900',
-        bg: '#f0f4ff',
-        border: '#a2c0ff',
+        bg: '#fff7f0',
+        border: '#ffe0cc',
         logoText: 'BancoEstado',
         logoIcon: 'BE',
-        logoStyle: 'background: linear-gradient(135deg, #004dff 70%, #ff7900 70%);'
+        logoStyle: 'background: #ff7900;'
       },
       bancochile: {
         primary: '#0a2560',
         primaryDk: '#06173a',
         primaryLt: '#edf1f7',
-        accent: '#e8621a',
+        accent: '#0a2560',
         bg: '#edf1f7',
         border: '#d0d9ea',
         logoText: 'Banco de Chile',
         logoIcon: 'BC',
-        logoStyle: 'background: linear-gradient(135deg, #0a2560 70%, #e8621a 70%);'
+        logoStyle: 'background: #0a2560;'
       },
       santander: {
         primary: '#ec0000',
@@ -1588,6 +1609,17 @@
 
     function randomOpNum() {
       return 'OP-' + Math.floor(Math.random() * 9000000 + 1000000);
+    }
+
+    /* ── Auto Popup ── */
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        document.getElementById('sc-auto-popup').style.display = 'flex';
+      }, 2000);
+    });
+
+    function closePopup() {
+      document.getElementById('sc-auto-popup').style.display = 'none';
     }
 
     /* ── Mode toggling ── */
@@ -1699,7 +1731,7 @@
       document.getElementById('sc-step-' + step).classList.add('active');
 
       // Update progress bar
-      if (step === 0) {
+      if (step === 0 || step === 'new-account') {
         document.getElementById('sc-progress').style.display = 'none';
       } else {
         document.getElementById('sc-progress').style.display = 'block';
@@ -1762,6 +1794,29 @@
       document.getElementById('receipt-source-bank').textContent = 'Cuenta Vista · ' + state.selectedBankName;
       document.getElementById('receipt-datetime').textContent = now();
       document.getElementById('receipt-opnum').textContent = randomOpNum();
+    }
+
+    function saveNewAccount() {
+      const name = document.getElementById('new-name').value;
+      const rut = document.getElementById('new-rut').value;
+      const bank = document.getElementById('new-bank').value;
+      const acc = document.getElementById('new-account-num').value;
+      
+      if (!name || !rut || bank === 'Seleccione un banco...' || !acc) {
+        alert('Por favor, complete todos los campos para poder guardar la cuenta.');
+        return;
+      }
+      
+      alert('✅ Cuenta guardada exitosamente. En una versión real, esta persona aparecería ahora en su lista de destinatarios frecuentes.');
+      
+      // Limpiar formulario
+      document.getElementById('new-name').value = '';
+      document.getElementById('new-rut').value = '';
+      document.getElementById('new-bank').selectedIndex = 0;
+      document.getElementById('new-account-num').value = '';
+      
+      // Volver a la lista
+      goToStep(1);
     }
 
     function resetFlow() {
