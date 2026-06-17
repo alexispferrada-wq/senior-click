@@ -425,9 +425,9 @@
        ===  SENIORCLICK OVERLAY  ===
     ============================================================ */
     #sc-overlay {
-      position: fixed;
+      position: absolute;
       inset: 0;
-      z-index: 1000;
+      z-index: 500;
       background: var(--sc-bg);
       display: flex;
       flex-direction: column;
@@ -859,17 +859,19 @@
     }
 
     /* ============================================================
-       AUTO POPUP SENIORCLICK
+       AUTO POPUP SENIORCLICK (ABSOLUTE FOR CONTAINER)
     ============================================================ */
     .sc-auto-popup {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 3000;
+      position: absolute; inset: 0; background: rgba(15, 23, 42, 0.6); z-index: 600;
       display: flex; align-items: center; justify-content: center;
       animation: fadeIn var(--t-med) both;
+      backdrop-filter: blur(4px);
     }
     .sc-auto-popup-content {
-      background: white; border-radius: var(--r-xl); padding: 40px; max-width: 480px;
+      background: white; border-radius: var(--r-xl); padding: 32px; max-width: 440px;
       text-align: center; box-shadow: var(--shadow-xl);
       border: 4px solid var(--sc-primary);
+      margin: 20px;
     }
     @keyframes fadeIn {
       from { opacity: 0; }
@@ -885,34 +887,932 @@
       user-select: none;
       transition: filter var(--t-slow);
     }
+
+    /* ============================================================
+       SENIORCLICK LANDING PAGE BRANDING & STYLES
+    ============================================================ */
+    :root {
+      /* SeniorClick Landing Page Colors */
+      --sc-brand: #0f9f6e;
+      --sc-brand-dark: #0b7a54;
+      --sc-brand-light: #e6f6f0;
+      --sc-slate-900: #0f172a;
+      --sc-slate-800: #1e293b;
+      --sc-slate-700: #334155;
+      --sc-slate-600: #475569;
+      --sc-slate-500: #64748b;
+      --sc-slate-100: #f1f5f9;
+      --sc-slate-50: #f8fafc;
+    }
+
+    /* Apply styles specifically to landing page elements, leaving bank wrappers customized */
+    .landing-body {
+      background: var(--sc-slate-50);
+      color: var(--sc-slate-700);
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    /* Landing Header */
+    .landing-header {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 900;
+    }
+    
+    .landing-header-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 32px;
+    }
+
+    .landing-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 22px;
+      color: var(--sc-slate-900);
+      text-decoration: none;
+      margin-right: auto;
+    }
+
+    .landing-logo-icon {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, var(--sc-brand) 0%, var(--sc-brand-dark) 100%);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 15px;
+      font-weight: 950;
+      box-shadow: 0 4px 12px rgba(15, 159, 110, 0.2);
+    }
+    
+    .landing-logo-text span {
+      color: var(--sc-brand);
+    }
+
+    .landing-nav {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .landing-nav a {
+      color: var(--sc-slate-600);
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .landing-nav a:hover {
+      color: var(--sc-brand);
+    }
+
+    .landing-cta-btn {
+      background: var(--sc-brand);
+      color: white;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 10px 20px;
+      border-radius: var(--r-sm);
+      text-decoration: none;
+      transition: all 0.2s;
+      box-shadow: 0 4px 14px rgba(15, 159, 110, 0.3);
+      border: none;
+      cursor: pointer;
+    }
+
+    .landing-cta-btn:hover {
+      background: var(--sc-brand-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(15, 159, 110, 0.4);
+    }
+
+    /* Hero Section */
+    .landing-hero {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 80px 24px 60px;
+      text-align: center;
+    }
+
+    .landing-hero h1 {
+      font-size: 54px;
+      font-weight: 900;
+      color: var(--sc-slate-900);
+      line-height: 1.15;
+      margin-bottom: 20px;
+      letter-spacing: -1.5px;
+    }
+
+    .landing-hero h1 span {
+      background: linear-gradient(135deg, var(--sc-brand) 0%, #086b49 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .landing-hero p {
+      font-size: 19px;
+      color: var(--sc-slate-600);
+      max-width: 780px;
+      margin: 0 auto 36px;
+      line-height: 1.6;
+    }
+
+    /* Target Market Cards */
+    .landing-about {
+      background: white;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      padding: 80px 24px;
+    }
+
+    .landing-section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 56px;
+    }
+
+    .landing-section-header h2 {
+      font-size: 34px;
+      font-weight: 900;
+      color: var(--sc-slate-900);
+      margin-bottom: 14px;
+    }
+
+    .landing-section-header p {
+      font-size: 16px;
+      color: var(--sc-slate-500);
+      line-height: 1.55;
+    }
+
+    .market-grid {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .market-card {
+      background: var(--sc-slate-50);
+      border: 1.5px solid #f1f5f9;
+      border-radius: var(--r-lg);
+      padding: 28px 20px;
+      transition: all 0.3s;
+    }
+
+    .market-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 32px rgba(15, 23, 42, 0.05);
+      border-color: rgba(15, 159, 110, 0.2);
+    }
+
+    .market-icon {
+      font-size: 34px;
+      margin-bottom: 16px;
+      display: inline-block;
+    }
+
+    .market-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--sc-slate-900);
+      margin-bottom: 10px;
+    }
+
+    .market-desc {
+      font-size: 13.5px;
+      color: var(--sc-slate-500);
+      line-height: 1.5;
+    }
+
+    /* Demo Section */
+    .landing-demo-section {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 80px 24px 100px;
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+      align-items: start;
+      justify-items: center;
+    }
+
+    /* Simulated Browser Mockup */
+    .browser-mockup {
+      background: white;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      box-shadow: 0 30px 60px rgba(15, 23, 42, 0.12);
+      border-radius: var(--r-md);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      max-width: 900px;
+      width: 100%;
+    }
+
+    .browser-header {
+      background: #f1f5f9;
+      border-bottom: 1px solid #e2e8f0;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 16px;
+      user-select: none;
+    }
+
+    .browser-traffic-lights {
+      display: flex;
+      gap: 6px;
+    }
+
+    .browser-light {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .browser-light.red { background: #ff5f56; }
+    .browser-light.yellow { background: #ffbd2e; }
+    .browser-light.green { background: #27c93f; }
+
+    .browser-address-bar {
+      flex: 1;
+      background: white;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      height: 28px;
+      font-size: 12px;
+      color: var(--sc-slate-500);
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      gap: 8px;
+    }
+
+    .mockup-screen {
+      position: relative;
+      height: 680px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      background: var(--bank-bg);
+    }
+
+    /* Static Sidebar Wizard Panel */
+    .b2b-static-panel {
+      background: white;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+      border-radius: var(--r-xl);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .b2b-header {
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px dashed #e2e8f0;
+    }
+
+    .b2b-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--sc-slate-900);
+    }
+    
+    .b2b-brand span {
+      background: linear-gradient(135deg, var(--sc-brand) 0%, var(--sc-brand-dark) 100%);
+      color: white;
+      padding: 3px 9px;
+      border-radius: var(--r-sm);
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .b2b-badge {
+      display: inline-block;
+      background: var(--sc-slate-100);
+      color: var(--sc-slate-600);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: var(--r-sm);
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .b2b-desc {
+      font-size: 13px;
+      color: var(--sc-slate-500);
+      line-height: 1.45;
+      margin-top: 8px;
+    }
+
+    .b2b-section-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--sc-slate-900);
+      margin: 16px 0 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .b2b-brand-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .b2b-brand-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 10px;
+      border-radius: var(--r-md);
+      border: 2px solid #e2e8f0;
+      background: white;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--sc-slate-700);
+      text-align: left;
+      transition: all var(--t-fast);
+      cursor: pointer;
+    }
+
+    .b2b-brand-btn:hover {
+      border-color: #cbd5e1;
+      background: var(--sc-slate-50);
+    }
+
+    .b2b-brand-btn.active {
+      border-color: var(--brand-color);
+      background: var(--brand-bg);
+      color: var(--brand-color);
+    }
+
+    .b2b-brand-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--brand-color);
+      flex-shrink: 0;
+    }
+
+    .b2b-wizard-container {
+      background: var(--sc-slate-50);
+      border-radius: var(--r-md);
+      padding: 14px;
+      border: 1px solid #e2e8f0;
+      margin-bottom: 14px;
+    }
+
+    .b2b-wizard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .b2b-wizard-step-indicator {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--sc-brand);
+      text-transform: uppercase;
+    }
+
+    .b2b-wizard-title {
+      font-size: 14.5px;
+      font-weight: 800;
+      color: var(--sc-slate-900);
+      margin-bottom: 4px;
+    }
+
+    .b2b-wizard-desc {
+      font-size: 12.5px;
+      color: var(--sc-slate-600);
+      line-height: 1.45;
+      margin-bottom: 12px;
+    }
+
+    .b2b-wizard-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .b2b-action-btn {
+      flex: 1;
+      padding: 8px 10px;
+      border-radius: var(--r-sm);
+      background: var(--sc-brand);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+      cursor: pointer;
+      border: none;
+      transition: background var(--t-fast);
+    }
+
+    .b2b-action-btn:hover {
+      background: var(--sc-brand-dark);
+    }
+
+    .b2b-action-btn:disabled {
+      background: #cbd5e1;
+      cursor: not-allowed;
+    }
+
+    .b2b-wizard-nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .b2b-nav-btn {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--sc-slate-600);
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px 10px;
+      border-radius: var(--r-sm);
+      transition: background var(--t-fast);
+    }
+
+    .b2b-nav-btn:hover:not(:disabled) {
+      background: #e2e8f0;
+      color: var(--sc-slate-900);
+    }
+
+    .b2b-nav-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .b2b-benefit-card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--r-md);
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .b2b-benefit-icon {
+      font-size: 16px;
+    }
+
+    .b2b-benefit-title {
+      font-size: 12.5px;
+      font-weight: 800;
+      color: var(--sc-slate-900);
+      margin-bottom: 2px;
+    }
+
+    .b2b-benefit-desc {
+      font-size: 11px;
+      color: var(--sc-slate-500);
+      line-height: 1.35;
+    }
+
+    /* Highlighting active animations */
+    .highlight-pulse-active {
+      animation: highlightPulse 1.5s infinite;
+      position: relative;
+      z-index: 150;
+    }
+
+    @keyframes highlightPulse {
+      0%, 100% { outline: 3px solid var(--bank-primary); outline-offset: 4px; box-shadow: 0 0 15px rgba(255, 121, 0, 0.4); }
+      50% { outline: 6px solid var(--bank-primary); outline-offset: 8px; box-shadow: 0 0 25px rgba(255, 121, 0, 0.6); }
+    }
+
+    /* ============================================================
+       SIMULATOR MODAL OVERLAY & SELECTOR CARDS
+    ============================================================ */
+    
+    /* Bank selector grid on landing page */
+    .sim-selector-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 40px;
+      width: 100%;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .sim-selector-card {
+      background: white;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: var(--r-lg);
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: all var(--t-med);
+    }
+    
+    .sim-selector-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(0, 0, 0, 0.12);
+    }
+    
+    .sim-card-accent {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+    }
+    
+    .sim-card-logo {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 20px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .sim-card-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--sc-slate-900);
+      margin-bottom: 12px;
+      font-family: 'Outfit', sans-serif;
+    }
+    
+    .sim-card-desc {
+      font-size: 13.5px;
+      color: var(--sc-slate-500);
+      line-height: 1.5;
+      margin-bottom: 24px;
+      flex-grow: 1;
+    }
+    
+    .sim-card-btn {
+      padding: 10px 20px;
+      font-size: 13px;
+      font-weight: 700;
+      border: 2px solid;
+      border-radius: var(--r-sm);
+      background: transparent;
+      transition: all var(--t-fast);
+      cursor: pointer;
+    }
+    
+    /* Hover effects for each card type */
+    .sim-selector-card[data-bank="santander"]:hover .sim-card-btn {
+      background: #EC0000;
+      color: white;
+    }
+    .sim-selector-card[data-bank="bancoestado"]:hover .sim-card-btn {
+      background: #006FB3;
+      color: white;
+    }
+    .sim-selector-card[data-bank="bancochile"]:hover .sim-card-btn {
+      background: #003B7C;
+      color: white;
+    }
+    .sim-selector-card[data-bank="bci"]:hover .sim-card-btn {
+      background: #0079AB;
+      color: white;
+    }
+    
+    /* Modal Overlay (Full-screen) */
+    .sim-modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(12px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--t-med) ease;
+      padding: 20px;
+    }
+    
+    .sim-modal-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+    
+    .sim-modal-container {
+      background: #f8fafc;
+      border-radius: var(--r-xl);
+      width: 95vw;
+      max-width: 1000px;
+      height: 90vh;
+      max-height: 900px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: var(--shadow-xl);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transform: translateY(40px);
+      transition: transform var(--t-med) cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    .sim-modal-overlay.active .sim-modal-container {
+      transform: translateY(0);
+    }
+    
+    .sim-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 28px;
+      background: white;
+      border-bottom: 1px solid #e2e8f0;
+      flex-shrink: 0;
+    }
+    
+    .sim-modal-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .sim-modal-badge {
+      background: var(--sc-primary-lt);
+      color: var(--sc-primary);
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .sim-modal-title h2 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--sc-slate-900);
+      font-family: 'Outfit', sans-serif;
+    }
+    
+    .sim-modal-close {
+      background: var(--sc-slate-100);
+      color: var(--sc-slate-700);
+      font-size: 14px;
+      font-weight: 700;
+      padding: 10px 18px;
+      border-radius: var(--r-sm);
+      transition: all var(--t-fast);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+    
+    .sim-modal-close:hover {
+      background: var(--sc-danger);
+      color: white;
+    }
+    
+    .sim-modal-body {
+      flex: 1;
+      padding: 24px;
+      overflow-y: auto;
+    }
+    
+    /* Body scrolling lock */
+    body.sim-active {
+      overflow: hidden;
+    }
+    
+    /* Responsive adaptations for grid */
+    @media (max-width: 1000px) {
+      .sim-selector-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 600px) {
+      .sim-selector-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Responsive Grid */
+    @media (max-width: 1100px) {
+      .landing-hero h1 { font-size: 40px; }
+      .market-grid { grid-template-columns: repeat(2, 1fr); }
+      .demo-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 650px) {
+      .landing-hero h1 { font-size: 30px; }
+      .market-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 
-<body>
+<body class="landing-body">
 
-  <!-- ═══════════════════════════════════════════════════════════
-       AUTO POPUP SENIORCLICK
-  ═══════════════════════════════════════════════════════════ -->
-  <div id="sc-auto-popup" class="sc-auto-popup" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="popup-heading">
-    <div class="sc-auto-popup-content">
-      <div style="font-size: 60px; margin-bottom: 16px;">👴</div>
-      <h2 id="popup-heading" style="font-size: 26px; font-weight: 800; color: var(--sc-text); margin-bottom: 12px;">¿Desea simplificar esta página?</h2>
-      <p style="font-size: 18px; color: var(--sc-muted); margin-bottom: 32px; line-height: 1.4;">Hemos detectado que puede beneficiarse del <strong>Modo SeniorClick</strong>. Esto hará las letras más grandes y el proceso mucho más fácil y seguro.</p>
-      <div class="sc-btn-row" style="margin-top: 0;">
-        <button class="sc-btn sc-btn-secondary" onclick="closePopup()" style="font-size:18px; padding: 14px 24px;">No, gracias</button>
-        <button class="sc-btn sc-btn-primary" onclick="closePopup(); activateSeniorClick()" style="font-size:18px; padding: 14px 24px; background: var(--sc-primary); color: white;">Activar SeniorClick</button>
+  <!-- Landing Header -->
+  <header class="landing-header">
+    <div class="landing-header-inner">
+      <a href="#" class="landing-logo">
+        <div class="landing-logo-icon">SC</div>
+        <span class="landing-logo-text">Senior<span>Click</span></span>
+      </a>
+      <nav class="landing-nav">
+        <a href="#product">Producto</a>
+        <a href="#markets">Clientes</a>
+        <a href="#demo-section" class="landing-cta-btn" style="color: white;">Ver Demo Interactiva</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="landing-hero" id="product">
+    <h1>Capa de accesibilidad cognitiva para la <span>Tercera Edad</span></h1>
+    <p>
+      SeniorClick es una solucion SaaS B2B inyectable nativamente en sitios web corporativos. Con un solo clic, adapta las interfaces digitales de alta concurrencia senior para personas mayores de 65 anos, eliminando la friccion y reduciendo el miedo al error transaccional.
+    </p>
+    <a href="#demo-section" class="landing-cta-btn" style="font-size: 16px; padding: 14px 28px;">Probar Demo Interactiva -></a>
+  </section>
+
+  <!-- Target Markets Section -->
+  <section class="landing-about" id="markets">
+    <div class="landing-section-header">
+      <h2>Clientes y Casos de Uso Clave</h2>
+      <p>
+        Disenamos soluciones inyectables nativas para portales de alta transaccionalidad senior.
+      </p>
+    </div>
+    
+    <div class="market-grid">
+      <!-- Cajas de Compensacion -->
+      <div class="market-card">
+        <div class="market-title">Cajas de Compensacion</div>
+        <p class="market-desc">
+          Cobros asistidos de pension, asignaciones previsionales y visualizacion de beneficios sin confusion en portales como Caja Los Andes.
+        </p>
+      </div>
+
+      <!-- Bancos -->
+      <div class="market-card">
+        <div class="market-title">Bancos y Fintechs</div>
+        <p class="market-desc">
+          Flujo de transferencias electronicas de fondos (TEF) en 4 pasos, textos gigantes en palabras y doble confirmacion visual para mitigar el miedo a cometer errores financieros.
+        </p>
+      </div>
+
+      <!-- Centros Medicos -->
+      <div class="market-card">
+        <div class="market-title">Salud y Clinicas</div>
+        <p class="market-desc">
+          Agendamiento de horas medicas paso a paso, lectura clara de recetas y compra simplificada de insumos medicos u ortopedicos.
+        </p>
+      </div>
+
+      <!-- Gobierno -->
+      <div class="market-card">
+        <div class="market-title">Portales del Estado</div>
+        <p class="market-desc">
+          Realizacion de tramites obligatorios gubernamentales y postulacion a bonos estatales en portales de alta concurrencia como ChileAtiende.
+        </p>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- ═══════════════════════════════════════════════════════════
-       BANK NORMAL MODE — WRAPPER
-  ═══════════════════════════════════════════════════════════ -->
-  <div id="bank-wrapper">
+  <!-- Demo Section -->
+  <section class="landing-demo-section" id="demo-section">
+    <div class="landing-section-header" style="margin-bottom: 40px;">
+      <h2>Demostrador del Producto en Tiempo Real</h2>
+      <p>
+        Interactua con el simulador inferior para comprobar como nuestro script de accesibilidad transforma un portal bancario o institucional.
+      </p>
+    </div>
+
+    <div class="sim-selector-grid">
+      <!-- Banco Santander -->
+      <div class="sim-selector-card" data-bank="santander" onclick="openSimulation('santander')">
+        <div class="sim-card-accent" style="background: #EC0000;"></div>
+        <div class="sim-card-logo" style="background: #EC0000; color: #FFFFFF;">S</div>
+        <h3 class="sim-card-title">Banco Santander</h3>
+        <p class="sim-card-desc">Simula el flujo de transferencias con los colores y la estructura típica de Santander.</p>
+        <button class="sim-card-btn" style="border-color: #EC0000; color: #EC0000;">Simular Banco</button>
+      </div>
+
+      <!-- BancoEstado -->
+      <div class="sim-selector-card" data-bank="bancoestado" onclick="openSimulation('bancoestado')">
+        <div class="sim-card-accent" style="background: #006FB3;"></div>
+        <div class="sim-card-logo" style="background: #006FB3; color: #FFFFFF;">BE</div>
+        <h3 class="sim-card-title">BancoEstado</h3>
+        <p class="sim-card-desc">Simula la Cuenta RUT y transferencias con los colores azul institucional de BancoEstado.</p>
+        <button class="sim-card-btn" style="border-color: #006FB3; color: #006FB3;">Simular Banco</button>
+      </div>
+
+      <!-- Banco de Chile -->
+      <div class="sim-selector-card" data-bank="bancochile" onclick="openSimulation('bancochile')">
+        <div class="sim-card-accent" style="background: #003B7C;"></div>
+        <div class="sim-card-logo" style="background: #003B7C; color: #FFFFFF;">BC</div>
+        <h3 class="sim-card-title">Banco de Chile</h3>
+        <p class="sim-card-desc">Prueba el comportamiento adaptativo en la interfaz azul tradicional del Banco de Chile.</p>
+        <button class="sim-card-btn" style="border-color: #003B7C; color: #003B7C;">Simular Banco</button>
+      </div>
+
+      <!-- Bci -->
+      <div class="sim-selector-card" data-bank="bci" onclick="openSimulation('bci')">
+        <div class="sim-card-accent" style="background: linear-gradient(90deg, #0079AB, #48B665, #FFD433, #EF3942);"></div>
+        <div class="sim-card-logo" style="background: linear-gradient(135deg, #0079AB 0%, #48B665 33%, #FFD433 66%, #EF3942 100%); color: #000000;">Bci</div>
+        <h3 class="sim-card-title">Banco Bci</h3>
+        <p class="sim-card-desc">Comprueba la inyección simplificada sobre la paleta corporativa multicolor de Bci.</p>
+        <button class="sim-card-btn" style="border-color: #0079AB; color: #0079AB;">Simular Banco</button>
+      </div>
+    </div>
+
+    <!-- Modal Overlay -->
+    <div id="simulation-overlay" class="sim-modal-overlay">
+      <div class="sim-modal-container">
+        <div class="sim-modal-header">
+          <div class="sim-modal-title">
+            <span class="sim-modal-badge">Demo Activa</span>
+            <h2 id="sim-modal-title-text">Simulación de Portal Bancario</h2>
+          </div>
+          <button class="sim-modal-close" onclick="closeSimulation()">
+            ✕ Cerrar Simulador
+          </button>
+        </div>
+        <div class="sim-modal-body">
+          <div class="demo-grid">
+      <!-- Right Column: Simulated Browser Mockup -->
+      <div class="browser-mockup">
+        <div class="browser-header">
+          <div class="browser-traffic-lights">
+            <div class="browser-light red"></div>
+            <div class="browser-light yellow"></div>
+            <div class="browser-light green"></div>
+          </div>
+          <div class="browser-address-bar">
+            <span>[Secure]</span>
+            <span id="browser-url-text">https://www.santander.cl/privado</span>
+          </div>
+        </div>
+
+        <!-- Contain the bank wrappers here -->
+        <div class="mockup-screen">
+
+          <!-- ═══════════════════════════════════════════════════════════
+               BANK NORMAL MODE — WRAPPER
+          ═══════════════════════════════════════════════════════════ -->
+          <div id="bank-wrapper">
 
     <!-- Top alert bar -->
     <div id="bank-alert-bar" role="banner" aria-label="Información de seguridad del banco">
-      <span>🔒 Conexión segura y encriptada — BancoEstado S.A.</span>
+      <span id="bank-alert-text">🔒 Conexión segura y encriptada — BancoEstado S.A.</span>
       <span>Sucursal virtual · Lun–Vie 08:00–22:00 · Sáb 09:00–14:00</span>
     </div>
 
@@ -922,8 +1822,8 @@
 
         <!-- Logo -->
         <a href="#" class="bank-logo" aria-label="BancoEstado — Ir al inicio">
-          <div class="bank-logo-icon" aria-hidden="true" style="background: linear-gradient(135deg, var(--bank-primary) 70%, var(--bank-secondary) 70%);">BE</div>
-          <span class="bank-logo-name">Banco<span>Estado</span></span>
+          <div class="bank-logo-icon" id="bank-logo-icon" aria-hidden="true" style="background: linear-gradient(135deg, var(--bank-primary) 70%, var(--bank-secondary) 70%);">BE</div>
+          <span class="bank-logo-name" id="bank-logo-text">Banco<span>Estado</span></span>
         </a>
 
         <!-- Navigation -->
@@ -953,15 +1853,7 @@
       </div>
     </header>
 
-    <!-- ── SENIORCLICK ACTIVATION BUTTON ── -->
-    <button id="sc-activate-btn" aria-label="Activar Modo SeniorClick: interfaz simplificada para mayor facilidad" onclick="activateSeniorClick()">
-      <span class="sc-btn-icon" aria-hidden="true">👴</span>
-      <span class="sc-btn-text">
-        Activar Modo SeniorClick
-        <small>Interfaz simplificada · Un solo clic</small>
-      </span>
-      <span class="sc-btn-badge" aria-hidden="true">NUEVO</span>
-    </button>
+
 
     <!-- Bank Main Content -->
     <main id="bank-main" role="main">
@@ -1077,7 +1969,7 @@
     <!-- Bank Footer -->
     <footer id="bank-footer" role="contentinfo">
       <p>
-        © 2025 BancoEstado S.A. — Entidad ficticia creada con fines de prototipo académico (FVIE01 · Innovación y Emprendimiento I)
+        <span id="bank-footer-text">© 2025 BancoEstado S.A. — Entidad ficticia creada con fines de prototipo académico (FVIE01 · Innovación y Emprendimiento I)</span>
         <br />
         <a href="#">Términos y Condiciones</a>
         <a href="#">Privacidad</a>
@@ -1113,9 +2005,7 @@
         Modo SeniorClick
       </div>
 
-      <button id="sc-deactivate-btn" onclick="deactivateSeniorClick()" aria-label="Desactivar Modo SeniorClick y volver a la página normal del banco">
-        ✕ Volver a la página normal
-      </button>
+
     </header>
 
     <!-- ── SC Body ── -->
@@ -1149,54 +2039,54 @@
         <div class="sc-recipients-grid" role="list" aria-label="Lista de bancos">
 
           <button class="sc-recipient-card" role="listitem" id="bank-select-estado"
-            style="border-color: #ff7900; border-width: 3px;"
+            style="border-color: #006FB3; border-width: 3px;"
             onclick="selectBank('bancoestado')">
-            <div class="sc-recipient-avatar" style="background: #ff7900; font-size: 20px; font-weight:800;" aria-hidden="true">BE</div>
+            <div class="sc-recipient-avatar" style="background: #006FB3; font-size: 20px; font-weight:800; color: #ffffff;" aria-hidden="true">BE</div>
             <div class="sc-recipient-info">
               <div class="sc-recipient-name">BancoEstado</div>
               <div class="sc-recipient-bank">CuentaRUT, Cuenta Vista o Corriente</div>
             </div>
-            <span class="sc-recipient-check" aria-hidden="true">➔</span>
+            <span class="sc-recipient-check" aria-hidden="true">-></span>
           </button>
 
           <button class="sc-recipient-card" role="listitem" id="bank-select-chile"
-            style="border-color: #0a2560; border-width: 3px;"
+            style="border-color: #003B7C; border-width: 3px;"
             onclick="selectBank('bancochile')">
-            <div class="sc-recipient-avatar" style="background: #0a2560; font-size: 20px; font-weight:800;" aria-hidden="true">BC</div>
+            <div class="sc-recipient-avatar" style="background: #003B7C; font-size: 20px; font-weight:800; color: #ffffff;" aria-hidden="true">BC</div>
             <div class="sc-recipient-info">
               <div class="sc-recipient-name">Banco de Chile</div>
               <div class="sc-recipient-bank">Cuenta Vista, Corriente o Banconexión</div>
             </div>
-            <span class="sc-recipient-check" aria-hidden="true">➔</span>
+            <span class="sc-recipient-check" aria-hidden="true">-></span>
           </button>
 
           <button class="sc-recipient-card" role="listitem" id="bank-select-santander"
             style="border-color: #ec0000; border-width: 3px;"
             onclick="selectBank('santander')">
-            <div class="sc-recipient-avatar" style="background: #ec0000; font-size: 20px; font-weight:800;" aria-hidden="true">S</div>
+            <div class="sc-recipient-avatar" style="background: #ec0000; font-size: 20px; font-weight:800; color: #ffffff;" aria-hidden="true">S</div>
             <div class="sc-recipient-info">
               <div class="sc-recipient-name">Banco Santander</div>
               <div class="sc-recipient-bank">Supergiro, Cuenta Vista o Corriente</div>
             </div>
-            <span class="sc-recipient-check" aria-hidden="true">➔</span>
+            <span class="sc-recipient-check" aria-hidden="true">-></span>
           </button>
 
           <button class="sc-recipient-card" role="listitem" id="bank-select-bci"
-            style="border-color: #006738; border-width: 3px;"
+            style="border-color: #0079AB; border-width: 3px;"
             onclick="selectBank('bci')">
-            <div class="sc-recipient-avatar" style="background: #006738; font-size: 20px; font-weight:800;" aria-hidden="true">Bci</div>
+            <div class="sc-recipient-avatar" style="background: linear-gradient(135deg, #0079AB 0%, #48B665 33%, #FFD433 66%, #EF3942 100%); font-size: 20px; font-weight:800; color: #000000;" aria-hidden="true">Bci</div>
             <div class="sc-recipient-info">
               <div class="sc-recipient-name">Bci</div>
               <div class="sc-recipient-bank">Cuenta Corriente o Vista Bci / MACH</div>
             </div>
-            <span class="sc-recipient-check" aria-hidden="true">➔</span>
+            <span class="sc-recipient-check" aria-hidden="true">-></span>
           </button>
 
         </div>
 
         <div class="sc-btn-row">
           <button class="sc-btn sc-btn-secondary" onclick="deactivateSeniorClick()" aria-label="Cancelar y volver a la página normal">
-            ← Cancelar y volver
+            <- Cancelar y volver
           </button>
         </div>
       </section>
@@ -1251,8 +2141,8 @@
         </div>
 
         <div class="sc-btn-row" style="margin-top: 40px;">
-          <button class="sc-btn sc-btn-secondary" onclick="goToStep(0)" aria-label="Volver a seleccionar su banco">
-            ← Cambiar Banco
+          <button class="sc-btn sc-btn-secondary" onclick="closeSimulation()" aria-label="Cerrar el simulador y volver a la página principal">
+            ← Salir
           </button>
           <button class="sc-btn sc-btn-primary" id="step1-next-btn"
             disabled onclick="goToStep(2)" aria-label="Continuar al siguiente paso">
@@ -1433,7 +2323,6 @@
 
       </section><!-- /step-3 -->
 
-
       <!-- ══════════════════════════════════
            STEP 4 — SUCCESS
       ══════════════════════════════════ -->
@@ -1478,7 +2367,7 @@
           <button class="sc-btn sc-btn-success" onclick="resetFlow()" aria-label="Realizar otra transferencia">
             💸 Otra transferencia
           </button>
-          <button class="sc-btn sc-btn-secondary" onclick="deactivateSeniorClick()" aria-label="Volver a la página principal del banco">
+          <button class="sc-btn sc-btn-secondary" onclick="closeSimulation()" aria-label="Cerrar el simulador y volver a la página principal">
             🏠 Volver al inicio
           </button>
         </div>
@@ -1488,6 +2377,11 @@
     </main><!-- /sc-body -->
 
   </div><!-- /sc-overlay -->
+
+          </div><!-- /demo-grid -->
+        </div><!-- /sim-modal-body -->
+      </div><!-- /sim-modal-container -->
+    </div><!-- /simulation-overlay -->
 
 
   <!-- ============================================================
@@ -1509,50 +2403,204 @@
 
     const themes = {
       bancoestado: {
-        primary: '#ff7900',
-        primaryDk: '#cc6100',
-        primaryLt: '#fff7f0',
-        accent: '#ff7900',
-        bg: '#fff7f0',
-        border: '#ffe0cc',
+        primary: '#006FB3', // Azul Institucional
+        primaryDk: '#00548a',
+        primaryLt: '#f0f6fa',
+        accent: '#FE6565', // Rojo de acento
+        bg: '#f0f6fa',
+        border: '#ccddec',
         logoText: 'BancoEstado',
         logoIcon: 'BE',
-        logoStyle: 'background: #ff7900;'
+        logoStyle: 'background: #006FB3; color: #ffffff;'
       },
       bancochile: {
-        primary: '#0a2560',
-        primaryDk: '#06173a',
-        primaryLt: '#edf1f7',
-        accent: '#0a2560',
-        bg: '#edf1f7',
-        border: '#d0d9ea',
+        primary: '#003B7C', // Azul Banco de Chile
+        primaryDk: '#002854',
+        primaryLt: '#f0f3f7',
+        accent: '#C9A05A', // Dorado
+        bg: '#f0f3f7',
+        border: '#ccd8e5',
         logoText: 'Banco de Chile',
         logoIcon: 'BC',
-        logoStyle: 'background: #0a2560;'
+        logoStyle: 'background: #003B7C; color: #ffffff;'
       },
       santander: {
-        primary: '#ec0000',
+        primary: '#EC0000', // Rojo Santander
         primaryDk: '#b30000',
-        primaryLt: '#fff5f5',
-        accent: '#ec0000',
-        bg: '#fff5f5',
-        border: '#ffccd0',
+        primaryLt: '#DEEDF2', // Cielo
+        accent: '#EC0000',
+        bg: '#FFFFFF', // Blanco
+        border: '#DEEDF2',
         logoText: 'Santander',
         logoIcon: 'S',
-        logoStyle: 'background: #ec0000;'
+        logoStyle: 'background: #EC0000; color: #ffffff;'
       },
       bci: {
-        primary: '#006738',
-        primaryDk: '#004727',
-        primaryLt: '#f0f7f2',
-        accent: '#78be20',
-        bg: '#f0f7f2',
-        border: '#add5bf',
+        primary: '#0079AB', // Azul Bci
+        primaryDk: '#005f87',
+        primaryLt: '#f0f7fb',
+        accent: '#48B665', // Verde Bci
+        bg: '#f0f7fb',
+        border: '#cce4f0',
         logoText: 'Bci',
         logoIcon: 'Bci',
-        logoStyle: 'background: #006738;'
+        logoStyle: 'background: linear-gradient(135deg, #0079AB 0%, #48B665 33%, #FFD433 66%, #EF3942 100%); color: #000000;' // Todos los colores del Bci con texto negro
       }
     };
+
+    const bankThemes = {
+      bancoestado: {
+        primary: '#006FB3',
+        secondary: '#FE6565',
+        bg: '#f0f6fa',
+        border: '#ccddec',
+        logoText: 'Banco<span>Estado</span>',
+        logoIcon: 'BE',
+        alertText: '🔒 Conexión segura y encriptada — BancoEstado S.A.',
+        footerText: '© 2025 BancoEstado S.A. — Entidad ficticia académica (FVIE01 · Innovación y Emprendimiento I)',
+        welcomeText: '¡Bienvenida, Carmen! 👋'
+      },
+      bancochile: {
+        primary: '#003B7C',
+        secondary: '#C9A05A',
+        bg: '#f0f3f7',
+        border: '#ccd8e5',
+        logoText: 'Banco<span>deChile</span>',
+        logoIcon: 'BC',
+        alertText: '🔒 Conexión cifrada de seguridad — Banco de Chile',
+        footerText: '© 2025 Banco de Chile — Entidad ficticia académica (FVIE01 · Innovación y Emprendimiento I)',
+        welcomeText: '¡Bienvenida a tu Banco, Carmen! 👋'
+      },
+      santander: {
+        primary: '#EC0000',
+        secondary: '#b30000',
+        bg: '#FFFFFF',
+        border: '#DEEDF2',
+        logoText: 'Banco<span>Santander</span>',
+        logoIcon: 'S',
+        alertText: '🔒 Conexión segura y certificada · Santander Chile S.A.',
+        footerText: '© 2025 Banco Santander Chile S.A. — Entidad ficticia académica (FVIE01 · Innovación y Emprendimiento I)',
+        welcomeText: '¡Bienvenida a tu Portal Santander, Carmen! 🔴'
+      },
+      bci: {
+        primary: '#0079AB',
+        secondary: '#EF3942',
+        bg: '#f0f7fb',
+        border: '#cce4f0',
+        logoText: 'Banco<span>Bci</span>',
+        logoIcon: 'Bci',
+        alertText: '🔒 Conexión segura y protegida — Banco Bci S.A.',
+        footerText: '© 2025 Bci — Entidad ficticia académica (FVIE01 · Innovación y Emprendimiento I)',
+        welcomeText: '¡Bienvenida a Bci, Carmen! 🟢'
+      }
+    };
+
+    const b2bState = {
+      currentStep: 1,
+      maxStep: 4
+    };
+
+    function startEmulator(bankKey) {
+      changeNormalBankTheme(bankKey);
+      
+      const modal = document.getElementById('b2b-onboarding-modal');
+      if (modal) modal.style.display = 'none';
+      
+      const panel = document.getElementById('b2b-control-panel');
+      if (panel) {
+        panel.classList.remove('collapsed');
+        document.body.classList.add('b2b-sidebar-open');
+      }
+      
+      b2bGoToStep(1);
+    }
+
+    function toggleB2BPanel() {
+      const panel = document.getElementById('b2b-control-panel');
+      if (panel) {
+        panel.classList.toggle('collapsed');
+        document.body.classList.toggle('b2b-sidebar-open');
+      }
+    }
+
+    function changeNormalBankTheme(bankKey) {
+      const bt = bankThemes[bankKey];
+      if (!bt) return;
+
+      state.selectedBankKey = bankKey;
+      state.selectedBankName = bankKey === 'chileatiende' ? 'ChileAtiende' : (bankKey === 'cajalosandes' ? 'Caja Los Andes' : bt.logoText.replace(/<span>|<\/span>/g, ''));
+
+      const root = document.documentElement;
+      root.style.setProperty('--bank-primary', bt.primary);
+      root.style.setProperty('--bank-secondary', bt.secondary);
+      root.style.setProperty('--bank-bg', bt.bg);
+      root.style.setProperty('--bank-border', bt.border);
+
+      const normalLogoText = document.getElementById('bank-logo-text');
+      const normalLogoIcon = document.getElementById('bank-logo-icon');
+      if (normalLogoText) normalLogoText.innerHTML = bt.logoText;
+      if (normalLogoIcon) {
+        normalLogoIcon.textContent = bt.logoIcon;
+        normalLogoIcon.style.background = `linear-gradient(135deg, ${bt.primary} 70%, ${bt.secondary} 70%)`;
+      }
+
+      const normalAlertText = document.getElementById('bank-alert-text');
+      if (normalAlertText) normalAlertText.textContent = bt.alertText;
+
+      const normalFooterText = document.getElementById('bank-footer-text');
+      if (normalFooterText) normalFooterText.textContent = bt.footerText;
+
+      const normalHeroHeading = document.getElementById('hero-heading');
+      if (normalHeroHeading) normalHeroHeading.textContent = bt.welcomeText;
+
+      document.querySelectorAll('.b2b-brand-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      const activeBtn = document.getElementById('b2b-brand-' + bankKey);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const urlText = document.getElementById('browser-url-text');
+      if (urlText) {
+        const urls = {
+          santander: 'https://www.santander.cl/privado',
+          bancoestado: 'https://www.bancoestado.cl/cuentas',
+          chileatiende: 'https://www.chileatiende.gob.cl/tramites',
+          cajalosandes: 'https://www.cajalosandes.cl/afiliados',
+          bancochile: 'https://www.bancochile.cl/mi-banco',
+          bci: 'https://www.bci.cl/personas'
+        };
+        urlText.textContent = urls[bankKey] || 'https://www.institucion.cl';
+      }
+
+      syncSeniorClickTheme(bankKey);
+    }
+
+    function syncSeniorClickTheme(bankKey) {
+      const t = themes[bankKey];
+      if (!t) return;
+      const root = document.documentElement;
+      root.style.setProperty('--sc-primary', t.primary);
+      root.style.setProperty('--sc-primary-dk', t.primaryDk);
+      root.style.setProperty('--sc-primary-lt', t.primaryLt);
+      root.style.setProperty('--sc-accent', t.accent);
+      root.style.setProperty('--sc-bg', t.bg);
+      root.style.setProperty('--sc-border', t.border);
+
+      const logoText = document.querySelector('.sc-logo span');
+      const logoIcon = document.querySelector('.sc-logo-icon');
+      logoText.textContent = t.logoText;
+      logoIcon.textContent = t.logoIcon;
+      logoIcon.setAttribute('style', t.logoStyle);
+
+      const sourceBankVal = document.getElementById('sc-confirm-source-bank');
+      if (sourceBankVal) {
+        sourceBankVal.textContent = (bankKey === 'chileatiende' || bankKey === 'cajalosandes' ? 'Beneficios · ' : 'Cuenta Vista · ') + t.logoText + ' (****4821)';
+      }
+    }
+
+    function b2bGoToStep(step) {
+      // Panel B2B removido - Funcion inactiva
+    }
 
     function selectBank(bankKey) {
       const t = themes[bankKey];
@@ -1630,7 +2678,8 @@
       overlay.classList.add('sc-active');
       document.body.style.overflow = 'hidden';
       // Focus management
-      overlay.querySelector('#sc-deactivate-btn').focus();
+      const deactivateBtn = overlay.querySelector('#sc-deactivate-btn');
+      if (deactivateBtn) deactivateBtn.focus();
       announce('Modo SeniorClick activado. Por favor seleccione su banco.');
       resetFlow();
     }
@@ -1641,8 +2690,46 @@
       overlay.classList.remove('sc-active');
       wrapper.classList.remove('bank-content-blurred');
       document.body.style.overflow = '';
-      document.getElementById('sc-activate-btn').focus();
+      const activateBtn = document.getElementById('sc-activate-btn');
+      if (activateBtn) activateBtn.focus();
       announce('Modo SeniorClick desactivado. Ha vuelto a la página normal del banco.');
+    }
+
+    function openSimulation(bankKey) {
+      // 1. Lock body scrolling
+      document.body.classList.add('sim-active');
+      
+      // 2. Open the modal overlay
+      const overlay = document.getElementById('simulation-overlay');
+      overlay.classList.add('active');
+      
+      // 3. Load the selected bank theme into the simulator
+      changeNormalBankTheme(bankKey);
+      
+      // 4. Update the modal title text dynamically
+      const titleText = document.getElementById('sim-modal-title-text');
+      const bankNames = {
+        santander: 'Banco Santander',
+        bancoestado: 'BancoEstado',
+        bancochile: 'Banco de Chile',
+        bci: 'Banco Bci'
+      };
+      titleText.textContent = 'Simulación de Canal: ' + (bankNames[bankKey] || 'Banco');
+      
+      // 5. Activar SeniorClick directamente
+      activateSeniorClick();
+    }
+    
+    function closeSimulation() {
+      // 1. Unlock body scrolling
+      document.body.classList.remove('sim-active');
+      
+      // 2. Close the modal overlay
+      const overlay = document.getElementById('simulation-overlay');
+      overlay.classList.remove('active');
+      
+      // 3. Deactivate SeniorClick just in case
+      deactivateSeniorClick();
     }
 
     /* ── Recipient selection ── */
@@ -1826,7 +2913,7 @@
       state.selectedRecipientBank = '';
       state.selectedRecipientRut = '';
       state.rawAmount = '';
-      state.currentStep = 0;
+      state.currentStep = 1;
 
       document.querySelectorAll('.sc-recipient-card').forEach(c => {
         c.classList.remove('selected');
@@ -1838,14 +2925,14 @@
       document.getElementById('sc-amount-error').textContent = '';
 
       document.querySelectorAll('.sc-step').forEach(s => s.classList.remove('active'));
-      document.getElementById('sc-step-0').classList.add('active');
-      goToStep(0);
+      document.getElementById('sc-step-1').classList.add('active');
+      goToStep(1);
     }
 
     /* ── Keyboard support ── */
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && document.getElementById('sc-overlay').classList.contains('sc-active')) {
-        deactivateSeniorClick();
+      if (e.key === 'Escape' && document.getElementById('simulation-overlay').classList.contains('active')) {
+        closeSimulation();
       }
     });
   </script>
