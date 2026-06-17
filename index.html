@@ -562,6 +562,77 @@
     }
     .sc-help-tip-icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
     .sc-help-tip-text { font-size: 17px; color: #7c4a00; line-height: 1.4; }
+    
+    .sc-assistant-banner {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: #eff6ff;
+      border: 2px solid #3b82f6;
+      border-radius: 12px;
+      padding: 16px;
+      margin: 20px 20px 0;
+    }
+    
+    .sc-assistant-avatar {
+      font-size: 32px;
+      background: #ffffff;
+      border-radius: 50%;
+      padding: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .sc-assistant-text {
+      flex: 1;
+    }
+    
+    .sc-assistant-text strong {
+      display: block;
+      font-size: 18px;
+      color: #1e40af;
+      margin-bottom: 4px;
+    }
+    
+    .sc-assistant-text span {
+      font-size: 16px;
+      color: #1e3a8a;
+      line-height: 1.4;
+    }
+
+    .sc-trust-contact {
+      margin-top: 24px;
+      padding: 20px;
+      background: #f0fdf4;
+      border: 2px solid #22c55e;
+      border-radius: 12px;
+    }
+    
+    .sc-checkbox-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      cursor: pointer;
+    }
+    
+    .sc-checkbox-input {
+      width: 28px;
+      height: 28px;
+      margin-top: 4px;
+      accent-color: #22c55e;
+      cursor: pointer;
+    }
+    
+    .sc-checkbox-text {
+      color: #166534;
+      font-size: 18px;
+      line-height: 1.4;
+    }
+    
+    .sc-checkbox-text strong {
+      font-size: 20px;
+      display: block;
+      margin-bottom: 4px;
+    }
 
     /* ── STEP 1: Recipient cards ── */
     .sc-recipients-grid {
@@ -2215,6 +2286,15 @@
     <!-- ── SC Body ── -->
     <main id="sc-body">
 
+      <!-- Assistant Banner -->
+      <div id="sc-assistant-banner" class="sc-assistant-banner" style="display: none;">
+        <div class="sc-assistant-avatar" aria-hidden="true">👩‍💼</div>
+        <div class="sc-assistant-text">
+          <strong>Asistente Virtual</strong>
+          <span id="sc-assistant-message">¿Qué desea hacer ahora? Seleccione una opción.</span>
+        </div>
+      </div>
+
       <!-- Progress Bar -->
       <nav id="sc-progress" aria-label="Progreso de la transferencia" style="display: none;">
         <div class="sc-progress-label">
@@ -2513,6 +2593,16 @@
           <div class="sc-confirm-warning" role="note">
             <span class="sc-confirm-warning-icon" aria-hidden="true">⚠️</span>
             <span>Una vez que confirme, el dinero saldrá de su cuenta. Si tiene alguna duda, presione <strong>"← Volver"</strong> para revisar de nuevo.</span>
+          </div>
+          
+          <div class="sc-trust-contact">
+            <label class="sc-checkbox-label">
+              <input type="checkbox" id="notify-trust-contact" class="sc-checkbox-input">
+              <span class="sc-checkbox-text">
+                <strong>📲 Notificar a mi contacto de confianza</strong>
+                <small style="font-size: 15px;">Enviaremos un SMS automático a su Hijo(a) con los detalles de esta transferencia para que esté al tanto.</small>
+              </span>
+            </label>
           </div>
         </div>
 
@@ -3026,8 +3116,10 @@
       // Update progress bar
       if (step === 0 || step === 'new-account') {
         document.getElementById('sc-progress').style.display = 'none';
-      } else {
+      }
+      if (step >= 1 && step <= 4) {
         document.getElementById('sc-progress').style.display = 'block';
+        document.getElementById('sc-assistant-banner').style.display = 'flex';
         updateProgress(step);
       }
       state.currentStep = step;
@@ -3066,6 +3158,19 @@
       bar.setAttribute('aria-valuenow', pct);
       title.textContent = titles[step];
       counter.textContent = step < 4 ? ('Paso ' + step + ' de 4') : '¡Listo!';
+
+      // Update Assistant Text
+      const msgs = [
+        'Seleccione el banco desde donde desea operar.',
+        '¿A quién desea enviarle el dinero? Elija de su lista de contactos.',
+        '¿Cuánto dinero necesita enviar? Escríbalo usando los botones grandes.',
+        'Por favor, revise con calma que los datos sean correctos. Nada se enviará hasta que confirme.',
+        'Todo ha salido perfecto. Su transferencia fue enviada de forma segura.'
+      ];
+      const assistantMsg = document.getElementById('sc-assistant-message');
+      if (assistantMsg) {
+        assistantMsg.textContent = msgs[step];
+      }
 
       // Also update step2 recipient name
       if (step >= 2) {
