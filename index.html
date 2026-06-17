@@ -2254,17 +2254,20 @@
 
     <!-- ── SC Header ── -->
     <header id="sc-header">
-      <div class="sc-logo" aria-label="BancoEstado — Modo SeniorClick activo">
-        <div class="sc-logo-icon" aria-hidden="true" style="background: linear-gradient(135deg, var(--bank-primary) 70%, var(--bank-secondary) 70%);">BE</div>
-        <span>BancoEstado</span>
+      <div class="sc-logo" aria-label="Banco — Modo SeniorClick activo">
+        <div class="sc-logo-icon" id="sc-header-logo-icon" aria-hidden="true" style="background: var(--sc-primary);">BE</div>
+        <span id="sc-header-logo-text">Banco</span>
       </div>
 
-      <div class="sc-mode-badge" aria-label="Modo SeniorClick activo">
-        <span class="sc-mode-dot" aria-hidden="true"></span>
-        Modo SeniorClick
+      <div style="display: flex; gap: 12px; align-items: center;">
+        <div class="sc-mode-badge" aria-label="Modo SeniorClick activo">
+          <span class="sc-mode-dot" aria-hidden="true"></span>
+          Modo SeniorClick
+        </div>
+        <button onclick="goToStep('settings')" style="background: white; border: 2.5px solid var(--sc-border); border-radius: 50%; width: 48px; height: 48px; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--sc-primary);" aria-label="Configuración de Senior Click" title="Configuración">
+          ⚙️
+        </button>
       </div>
-
-
     </header>
 
     <!-- ── SC Body ── -->
@@ -2463,6 +2466,68 @@
           </button>
           <button class="sc-btn sc-btn-success" onclick="saveNewAccount()" aria-label="Guardar nueva cuenta">
             💾 Guardar Cuenta
+          </button>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════
+           STEP: TUTOR AUTH (NEW ACCOUNT)
+      ══════════════════════════════════ -->
+      <section class="sc-step" id="sc-step-tutor-auth" aria-labelledby="tutor-auth-heading">
+        <h1 class="sc-step-title" id="tutor-auth-heading">Seguridad: Autorización del Tutor</h1>
+        <p class="sc-step-subtitle">Como está añadiendo una cuenta nueva, necesitamos la autorización de su contacto de confianza.</p>
+
+        <div style="background: #eff6ff; border: 2px solid #3b82f6; border-radius: 12px; padding: 24px; margin-bottom: 24px; display: flex; gap: 16px; align-items: start;">
+          <div style="font-size: 32px;">📲</div>
+          <div>
+            <strong style="display: block; font-size: 19px; color: #1e40af; margin-bottom: 8px;">Código enviado a su Hijo(a)</strong>
+            <span style="font-size: 17px; color: #1e3a8a; line-height: 1.4;">Hemos enviado un SMS automático a su tutor financiero. Por favor, pídale que le dicte el código de 4 dígitos para autorizar a este nuevo destinatario.</span>
+          </div>
+        </div>
+
+        <div style="background: white; padding: 32px; border-radius: var(--r-xl); border: 3px solid var(--sc-border); text-align: center;">
+          <label style="display: block; font-size: 20px; font-weight: 700; margin-bottom: 16px; color: var(--sc-text);">Ingrese el código de 4 dígitos:</label>
+          <input type="number" id="tutor-auth-code" maxlength="4" placeholder="Ej: 1234" style="width: 200px; font-size: 36px; padding: 16px; border: 3px solid var(--sc-primary); border-radius: var(--r-md); outline: none; text-align: center; letter-spacing: 8px; font-weight: 800; color: var(--sc-primary);">
+        </div>
+
+        <div class="sc-btn-row" style="margin-top: 32px;">
+          <button class="sc-btn sc-btn-danger" onclick="goToStep(1)" aria-label="Cancelar y volver">
+            ← Cancelar
+          </button>
+          <button class="sc-btn sc-btn-primary" onclick="verifyTutorCode()" aria-label="Verificar código y continuar">
+            ✅ Verificar Código
+          </button>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════
+           STEP: SETTINGS (CONFIGURACIÓN)
+      ══════════════════════════════════ -->
+      <section class="sc-step" id="sc-step-settings" aria-labelledby="settings-heading">
+        <h1 class="sc-step-title" id="settings-heading">Configuración Senior Click</h1>
+        <p class="sc-step-subtitle">Ajuste sus preferencias de seguridad y asistencia.</p>
+
+        <div style="background: white; padding: 32px; border-radius: var(--r-xl); border: 3px solid var(--sc-border); margin-bottom: 32px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--sc-border); padding-bottom: 24px; margin-bottom: 24px;">
+            <div>
+              <h3 style="font-size: 22px; color: var(--sc-text); margin-bottom: 8px;">Tutor Financiero</h3>
+              <p style="font-size: 16px; color: var(--sc-muted); max-width: 500px; line-height: 1.5;">Si está activado, se enviará un SMS automático a su contacto de confianza (ej: su hijo) cada vez que añada una nueva cuenta bancaria, pidiendo un código de autorización.</p>
+            </div>
+            <label style="position: relative; display: inline-block; width: 60px; height: 34px;">
+              <input type="checkbox" id="tutor-toggle" checked onchange="toggleTutor(this)" style="opacity: 0; width: 0; height: 0;">
+              <span class="slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--sc-success); transition: .4s; border-radius: 34px;"></span>
+              <span class="slider-knob" style="position: absolute; content: ''; height: 26px; width: 26px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; transform: translateX(26px);"></span>
+            </label>
+          </div>
+          <style>
+            #tutor-toggle:not(:checked) + .slider { background-color: #cbd5e1; }
+            #tutor-toggle:not(:checked) ~ .slider-knob { transform: translateX(0); }
+          </style>
+        </div>
+
+        <div class="sc-btn-row">
+          <button class="sc-btn sc-btn-primary" onclick="goToStep(1)" aria-label="Volver a inicio">
+            ← Volver al Inicio
           </button>
         </div>
       </section>
@@ -2679,6 +2744,7 @@
       selectedRecipientRut: '',
       rawAmount: '',
       currentStep: 0,
+      tutorEnabled: true
     };
 
     const themes = {
@@ -2827,6 +2893,15 @@
       if (normalLogoIcon) {
         normalLogoIcon.textContent = bt.logoIcon;
         normalLogoIcon.style.background = `linear-gradient(135deg, ${bt.primary} 70%, ${bt.secondary} 70%)`;
+      }
+
+      // Update SeniorClick internal Header logo
+      const scLogoText = document.getElementById('sc-header-logo-text');
+      const scLogoIcon = document.getElementById('sc-header-logo-icon');
+      if (scLogoText) scLogoText.innerHTML = bt.logoText;
+      if (scLogoIcon) {
+        scLogoIcon.textContent = bt.logoIcon;
+        scLogoIcon.style.background = `linear-gradient(135deg, ${bt.primary} 70%, ${bt.secondary} 70%)`;
       }
 
       const normalAlertText = document.getElementById('bank-alert-text');
@@ -3113,11 +3188,13 @@
 
       // Hide current, show new
       document.querySelectorAll('.sc-step').forEach(s => s.classList.remove('active'));
-      document.getElementById('sc-step-' + step).classList.add('active');
+      const stepEl = document.getElementById('sc-step-' + step);
+      if (stepEl) stepEl.classList.add('active');
 
       // Update progress bar
-      if (step === 0 || step === 'new-account') {
+      if (step === 0 || step === 'new-account' || step === 'settings' || step === 'tutor-auth') {
         document.getElementById('sc-progress').style.display = 'none';
+        document.getElementById('sc-assistant-banner').style.display = 'none';
       }
       if (step >= 1 && step <= 4) {
         document.getElementById('sc-progress').style.display = 'block';
@@ -3207,6 +3284,28 @@
         return;
       }
       
+      if (state.tutorEnabled) {
+        goToStep('tutor-auth');
+      } else {
+        finishSavingNewAccount();
+      }
+    }
+
+    function toggleTutor(checkbox) {
+      state.tutorEnabled = checkbox.checked;
+    }
+
+    function verifyTutorCode() {
+      const code = document.getElementById('tutor-auth-code').value;
+      if (code.length < 4) {
+        alert('El código debe tener 4 dígitos. Por favor, revise el SMS que le llegó a su contacto de confianza.');
+        return;
+      }
+      document.getElementById('tutor-auth-code').value = '';
+      finishSavingNewAccount();
+    }
+
+    function finishSavingNewAccount() {
       alert('✅ Cuenta guardada exitosamente. En una versión real, esta persona aparecería ahora en su lista de destinatarios frecuentes.');
       
       // Limpiar formulario
