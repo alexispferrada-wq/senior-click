@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="bancoestado.cl — Portal bancario con Modo SeniorClick: accesibilidad cognitiva para adultos mayores de 60 años. Realiza transferencias de forma sencilla, segura y autónoma." />
   <meta name="robots" content="noindex" />
-  <title>bancoestado.cl — BancoEstado</title>
+  <title>Senior Click — Interfaz Cognitiva Segura</title>
+  <link rel="icon" href="logo.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -567,8 +568,8 @@
       display: flex;
       align-items: center;
       gap: 16px;
-      background: #eff6ff;
-      border: 2px solid #3b82f6;
+      background: var(--sc-primary-lt);
+      border: 2px solid var(--sc-primary);
       border-radius: 12px;
       padding: 16px;
       margin: 20px 20px 0;
@@ -589,13 +590,13 @@
     .sc-assistant-text strong {
       display: block;
       font-size: 18px;
-      color: #1e40af;
+      color: var(--sc-primary-dk);
       margin-bottom: 4px;
     }
     
     .sc-assistant-text span {
       font-size: 16px;
-      color: #1e3a8a;
+      color: var(--sc-primary-dk);
       line-height: 1.4;
     }
 
@@ -1735,16 +1736,11 @@
     
     .sim-modal-container {
       background: #f8fafc;
-      border-radius: var(--r-xl);
-      width: 95vw;
-      max-width: 1000px;
-      height: 90vh;
-      max-height: 900px;
+      width: 100vw;
+      height: 100vh;
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      box-shadow: var(--shadow-xl);
-      border: 1px solid rgba(255, 255, 255, 0.2);
       transform: translateY(40px);
       transition: transform var(--t-med) cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -2832,6 +2828,11 @@
       root.style.setProperty('--bank-bg', bt.bg);
       root.style.setProperty('--bank-border', bt.border);
 
+      // Match SeniorClick colors with Bank colors for maximum brand consistency
+      root.style.setProperty('--sc-primary', bt.primary);
+      root.style.setProperty('--sc-primary-dk', bt.secondary);
+      root.style.setProperty('--sc-primary-lt', bt.border);
+
       const normalLogoText = document.getElementById('bank-logo-text');
       const normalLogoIcon = document.getElementById('bank-logo-icon');
       if (normalLogoText) normalLogoText.innerHTML = bt.logoText;
@@ -3010,7 +3011,7 @@
         bancochile: 'Banco de Chile',
         bci: 'Banco Bci'
       };
-      titleText.textContent = 'Simulación de Canal: ' + (bankNames[bankKey] || 'Banco');
+      titleText.textContent = 'Simulación ' + (bankNames[bankKey] || 'Banco');
       
       // 5. Activar SeniorClick directamente
       activateSeniorClick();
