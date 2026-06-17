@@ -1960,15 +1960,6 @@
         <button class="sim-card-btn" style="border-color: #EC0000; color: #EC0000;">Simular Banco</button>
       </div>
 
-      <!-- BancoEstado -->
-      <div class="sim-selector-card" data-bank="bancoestado" onclick="openSimulation('bancoestado')">
-        <div class="sim-card-accent" style="background: #FF5000;"></div>
-        <div class="sim-card-logo" style="background: #FF5000; color: #FFFFFF;">BE</div>
-        <h3 class="sim-card-title">BancoEstado</h3>
-        <p class="sim-card-desc">Simula la Cuenta RUT y transferencias con los colores azul institucional de BancoEstado.</p>
-        <button class="sim-card-btn" style="border-color: #FF5000; color: #CC4000;">Simular Banco</button>
-      </div>
-
       <!-- Banco de Chile -->
       <div class="sim-selector-card" data-bank="bancochile" onclick="openSimulation('bancochile')">
         <div class="sim-card-accent" style="background: #00246B;"></div>
@@ -1985,6 +1976,15 @@
         <h3 class="sim-card-title">Banco Falabella</h3>
         <p class="sim-card-desc">Comprueba la inyección simplificada sobre la paleta verde corporativa de Banco Falabella.</p>
         <button class="sim-card-btn" style="border-color: #6b7a1e; color: #6b7a1e;">Simular Banco</button>
+      </div>
+
+      <!-- BancoEstado -->
+      <div class="sim-selector-card" data-bank="bancoestado" onclick="openSimulation('bancoestado')">
+        <div class="sim-card-accent" style="background: #FF5000;"></div>
+        <div class="sim-card-logo" style="background: #FF5000; color: #FFFFFF;">BE</div>
+        <h3 class="sim-card-title">BancoEstado</h3>
+        <p class="sim-card-desc">Simula la Cuenta RUT y transferencias con los colores azul institucional de BancoEstado.</p>
+        <button class="sim-card-btn" style="border-color: #FF5000; color: #CC4000;">Simular Banco</button>
       </div>
     </div>
   </section><!-- /landing-demo-section -->
@@ -2749,26 +2749,26 @@
 
     const themes = {
       bancoestado: {
-        primary: '#006FB3', // Azul Institucional
-        primaryDk: '#00548a',
+        primary: '#FF5000', // Naranja Institucional
+        primaryDk: '#CC4000',
         primaryLt: '#f0f6fa',
-        accent: '#FE6565', // Rojo de acento
+        accent: '#006FB3', // Azul de acento
         bg: '#f0f6fa',
         border: '#ccddec',
         logoText: 'BancoEstado',
         logoIcon: 'BE',
-        logoStyle: 'background: #006FB3; color: #ffffff;'
+        logoStyle: 'background: #FF5000; color: #ffffff;'
       },
       bancochile: {
-        primary: '#003B7C', // Azul Banco de Chile
-        primaryDk: '#002854',
+        primary: '#00246B', // Azul Marino Banco de Chile
+        primaryDk: '#001a4d',
         primaryLt: '#f0f3f7',
         accent: '#C9A05A', // Dorado
         bg: '#f0f3f7',
         border: '#ccd8e5',
         logoText: 'Banco de Chile',
         logoIcon: 'BC',
-        logoStyle: 'background: #003B7C; color: #ffffff;'
+        logoStyle: 'background: #00246B; color: #ffffff;'
       },
       santander: {
         primary: '#EC0000', // Rojo Santander
@@ -2781,16 +2781,16 @@
         logoIcon: 'S',
         logoStyle: 'background: #EC0000; color: #ffffff;'
       },
-      bci: {
-        primary: '#0079AB', // Azul Bci
-        primaryDk: '#005f87',
-        primaryLt: '#f0f7fb',
-        accent: '#48B665', // Verde Bci
-        bg: '#f0f7fb',
-        border: '#cce4f0',
-        logoText: 'Bci',
-        logoIcon: 'Bci',
-        logoStyle: 'background: linear-gradient(135deg, #0079AB 0%, #48B665 33%, #FFD433 66%, #EF3942 100%); color: #000000;' // Todos los colores del Bci con texto negro
+      falabella: {
+        primary: '#B9D438', // Verde Falabella
+        primaryDk: '#8a9e29',
+        primaryLt: '#f5f7ed',
+        accent: '#6b7a1e', // Verde Oscuro
+        bg: '#f5f7ed',
+        border: '#dbe6ab',
+        logoText: 'Banco Falabella',
+        logoIcon: 'F',
+        logoStyle: 'background: #B9D438; color: #000000;'
       }
     };
 
