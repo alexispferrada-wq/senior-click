@@ -988,7 +988,7 @@
     
     @media (min-width: 768px) {
       .sc-footer-container {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
       }
     }
     
@@ -1006,6 +1006,45 @@
       color: #d1d5db;
       line-height: 1.6;
       margin-bottom: 10px;
+    }
+    
+    .sc-footer-contact p {
+      margin: 8px 0;
+      font-size: 15px;
+    }
+    
+    .sc-footer-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .sc-footer-links li {
+      margin-bottom: 12px;
+    }
+    
+    .sc-footer-links a {
+      color: #9ca3af;
+      text-decoration: none;
+      font-size: 15px;
+      transition: color 0.2s;
+    }
+    
+    .sc-footer-links a:hover {
+      color: #ffffff;
+      text-decoration: underline;
+    }
+    
+    .sc-footer-certifications {
+      background-color: rgba(15, 159, 110, 0.1);
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid var(--sc-brand-dark);
+    }
+    
+    .sc-footer-certifications h3 {
+      color: var(--sc-brand-light);
+      border-bottom-color: var(--sc-brand-light);
     }
     
     .sc-footer-contact p {
@@ -3102,31 +3141,46 @@
     });
   </script>
 
-  <!-- Footer -->
+  <!-- Footer Estándar y Legal -->
   <footer class="sc-footer">
     <div class="sc-footer-container">
+      
+      <!-- Columna 1: Información -->
       <div class="sc-footer-section">
         <h3>Senior Click</h3>
-        <p>Haciendo la tecnología accesible para todos. Diseñado con altos estándares de inclusión digital.</p>
+        <p>Haciendo la tecnología accesible para todos. Diseñado con altos estándares de inclusión digital y prevención de errores.</p>
         <div class="sc-footer-contact">
           <p>📞 Teléfono: +56 2 2345 6789</p>
           <p>✉️ Correo: contacto@seniorclick.cl</p>
           <p>📍 Dirección: Av. Providencia 1234, Santiago, Chile</p>
         </div>
       </div>
-      
+
+      <!-- Columna 2: Legal y Privacidad -->
       <div class="sc-footer-section">
-        <h3>Cumplimiento Normativo</h3>
-        <ul class="sc-footer-norms">
-          <li>✅ Ley de Inclusión N° 20.422 (Chile)</li>
-          <li>✅ Decreto Supremo N° 1 (SEGPRES)</li>
-          <li>✅ Estándar Internacional WCAG 2.1 AA</li>
-          <li>✅ Diseño Cognitivo y Prevención de Errores</li>
+        <h3>Legal y Privacidad</h3>
+        <ul class="sc-footer-links">
+          <li><a href="#terminos">Términos y Condiciones de Uso</a></li>
+          <li><a href="#privacidad">Política de Privacidad</a></li>
+          <li><a href="#cookies">Política de Cookies</a></li>
+          <li><a href="#soporte">Centro de Ayuda y Soporte</a></li>
         </ul>
       </div>
+      
+      <!-- Columna 3: Certificaciones -->
+      <div class="sc-footer-section sc-footer-certifications">
+        <h3>🏆 Certificaciones Activas</h3>
+        <ul class="sc-footer-norms">
+          <li><strong>✅ Estándar WCAG 2.1 AA</strong> - Aprobado</li>
+          <li><strong>✅ Ley de Inclusión N° 20.422</strong> - Aprobado</li>
+          <li><strong>✅ Decreto Supremo N° 1</strong> - Aprobado</li>
+          <li><strong>✅ Diseño Cognitivo Seguro</strong> - Aprobado</li>
+        </ul>
+      </div>
+      
     </div>
     <div class="sc-footer-bottom">
-      <p>&copy; 2026 Senior Click. Todos los derechos reservados.</p>
+      <p>&copy; 2026 Senior Click. Plataforma 100% Inclusiva. Todos los derechos reservados.</p>
     </div>
   </footer>
 
