@@ -1199,10 +1199,21 @@
       color: var(--sc-brand);
     }
 
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--sc-slate-600);
+      cursor: pointer;
+      padding: 8px;
+    }
+    .mobile-menu-btn:hover { color: var(--sc-brand); }
+
     .landing-nav {
       display: flex;
       align-items: center;
       gap: 32px;
+      margin-left: auto;
     }
 
     .landing-nav a {
@@ -1867,6 +1878,36 @@
       .demo-grid { grid-template-columns: 1fr; }
     }
 
+    @media (max-width: 800px) {
+      .landing-header-inner { justify-content: space-between; }
+      .mobile-menu-btn { display: block; }
+      .landing-nav {
+        display: none; /* Hide by default on mobile */
+        position: absolute;
+        top: 72px; /* Height of header */
+        left: 0;
+        right: 0;
+        background: white;
+        flex-direction: column;
+        padding: 24px;
+        box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        border-top: 1px solid var(--sc-border);
+        align-items: stretch;
+      }
+      .landing-nav.open {
+        display: flex;
+      }
+      .landing-nav a {
+        padding: 12px 0;
+        border-bottom: 1px solid var(--sc-border);
+      }
+      .landing-nav a.landing-cta-btn {
+        margin-top: 16px;
+        text-align: center;
+        border-bottom: none;
+      }
+    }
+
     @media (max-width: 650px) {
       .landing-hero h1 { font-size: 30px; }
       .market-grid { grid-template-columns: 1fr; }
@@ -1878,15 +1919,18 @@
 
   <!-- Landing Header -->
   <header class="landing-header">
-    <div class="landing-header-inner">
+    <div class="landing-header-inner" style="justify-content: space-between;">
       <a href="#" class="landing-logo">
         <img src="logo.png" alt="Senior Click Logo" class="landing-logo-img">
         <span class="landing-logo-text">Senior<span>Click</span></span>
       </a>
+      <button class="mobile-menu-btn" onclick="document.querySelector('.landing-nav').classList.toggle('open')" aria-label="Abrir menú">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
+      </button>
       <nav class="landing-nav">
-        <a href="#product">Producto</a>
-        <a href="#markets">Clientes</a>
-        <a href="#demo-section" class="landing-cta-btn" style="color: white;">Ver Demo Interactiva</a>
+        <a href="#product" onclick="document.querySelector('.landing-nav').classList.remove('open')">Producto</a>
+        <a href="#markets" onclick="document.querySelector('.landing-nav').classList.remove('open')">Clientes</a>
+        <a href="#demo-section" class="landing-cta-btn" style="color: white;" onclick="document.querySelector('.landing-nav').classList.remove('open')">Ver Demo Interactiva</a>
       </nav>
     </div>
   </header>
