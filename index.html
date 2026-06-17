@@ -32,7 +32,7 @@
       --sc-danger:       #dc2626;
       --sc-success:      #059669;
       --sc-bg:           #f0faf6;
-      --sc-surface:      #ffffff;
+      --sc-surface:      #fafafa; /* Softer off-white to reduce glare */
       --sc-text:         #0f172a;
       --sc-muted:        #475569;
       --sc-border:       #a7d7c5;
@@ -961,6 +961,82 @@
       box-shadow: 0 4px 12px rgba(15, 159, 110, 0.2);
     }
     
+    .landing-logo-img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+    
+    /* Footer Styles */
+    .sc-footer {
+      background-color: #111827; /* Negro/Slate oscuro para alto contraste */
+      color: #ffffff;
+      padding: 60px 20px 20px;
+      font-family: var(--font, 'Inter', sans-serif);
+      margin-top: auto;
+    }
+    
+    .sc-footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    
+    @media (min-width: 768px) {
+      .sc-footer-container {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    
+    .sc-footer-section h3 {
+      font-size: 20px;
+      margin-top: 0;
+      margin-bottom: 20px;
+      color: #ffffff;
+      border-bottom: 2px solid var(--sc-brand);
+      padding-bottom: 10px;
+      display: inline-block;
+    }
+    
+    .sc-footer-section p {
+      color: #d1d5db;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+    
+    .sc-footer-contact p {
+      margin: 8px 0;
+      font-size: 15px;
+    }
+    
+    .sc-footer-norms {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .sc-footer-norms li {
+      color: #e5e7eb;
+      margin-bottom: 12px;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .sc-footer-bottom {
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid #374151;
+      color: #9ca3af;
+      font-size: 14px;
+    }
+    
+    
     .landing-logo-text span {
       color: var(--sc-brand);
     }
@@ -1663,7 +1739,7 @@
   <header class="landing-header">
     <div class="landing-header-inner">
       <a href="#" class="landing-logo">
-        <div class="landing-logo-icon">SC</div>
+        <img src="logo.png" alt="Senior Click Logo" class="landing-logo-img">
         <span class="landing-logo-text">Senior<span>Click</span></span>
       </a>
       <nav class="landing-nav">
@@ -1676,7 +1752,7 @@
 
   <!-- Hero Section -->
   <section class="landing-hero" id="product">
-    <h1>Capa de accesibilidad cognitiva para la <span>Tercera Edad</span></h1>
+    <h1>Capa de accesibilidad cognitiva para la <br><span>Tercera Edad</span></h1>
     <p>
       SeniorClick es una solucion SaaS B2B inyectable nativamente en sitios web corporativos. Con un solo clic, adapta las interfaces digitales de alta concurrencia senior para personas mayores de 65 anos, eliminando la friccion y reduciendo el miedo al error transaccional.
     </p>
@@ -1695,7 +1771,7 @@
     <div class="market-grid">
       <!-- Cajas de Compensacion -->
       <div class="market-card">
-        <div class="market-title">Cajas de Compensacion</div>
+        <div class="market-title">🏢 Cajas de Compensacion</div>
         <p class="market-desc">
           Cobros asistidos de pension, asignaciones previsionales y visualizacion de beneficios sin confusion en portales como Caja Los Andes.
         </p>
@@ -1703,7 +1779,7 @@
 
       <!-- Bancos -->
       <div class="market-card">
-        <div class="market-title">Bancos y Fintechs</div>
+        <div class="market-title">🏦 Bancos y Fintechs</div>
         <p class="market-desc">
           Flujo de transferencias electronicas de fondos (TEF) en 4 pasos, textos gigantes en palabras y doble confirmacion visual para mitigar el miedo a cometer errores financieros.
         </p>
@@ -1711,7 +1787,7 @@
 
       <!-- Centros Medicos -->
       <div class="market-card">
-        <div class="market-title">Salud y Clinicas</div>
+        <div class="market-title">🏥 Salud y Clinicas</div>
         <p class="market-desc">
           Agendamiento de horas medicas paso a paso, lectura clara de recetas y compra simplificada de insumos medicos u ortopedicos.
         </p>
@@ -1719,9 +1795,53 @@
 
       <!-- Gobierno -->
       <div class="market-card">
-        <div class="market-title">Portales del Estado</div>
+        <div class="market-title">🏛️ Portales del Estado</div>
         <p class="market-desc">
           Realizacion de tramites obligatorios gubernamentales y postulacion a bonos estatales en portales de alta concurrencia como ChileAtiende.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Normas Section -->
+  <section class="landing-about" id="norms" style="background-color: var(--sc-slate-50); padding-top: 40px; padding-bottom: 60px;">
+    <div class="landing-section-header">
+      <h2>Normas y Certificaciones de Accesibilidad</h2>
+      <p>
+        Aseguramos el cumplimiento de los más altos estándares nacionales e internacionales.
+      </p>
+    </div>
+    
+    <div class="market-grid">
+      <!-- W3C / WAI -->
+      <div class="market-card">
+        <div class="market-title">🌐 Certificación W3C / WAI</div>
+        <p class="market-desc">
+          Nuestras interfaces cumplen estrictamente con las Pautas de Accesibilidad para el Contenido Web (WCAG), asegurando compatibilidad y facilidad de uso cognitivo.
+        </p>
+      </div>
+
+      <!-- Ley de Inclusión -->
+      <div class="market-card">
+        <div class="market-title">⚖️ Inclusión Financiera Digital</div>
+        <p class="market-desc">
+          Facilitamos el cumplimiento legal de las normativas de inclusión para bancos e instituciones, mitigando el riesgo de multas por discriminación digital.
+        </p>
+      </div>
+
+      <!-- Seguridad -->
+      <div class="market-card">
+        <div class="market-title">🔒 Seguridad y UX Cognitivo</div>
+        <p class="market-desc">
+          Diseño centrado en la prevención de errores mediante doble confirmación visual y telemetría activa de usabilidad en tiempo real.
+        </p>
+      </div>
+
+      <!-- Privacidad y Datos -->
+      <div class="market-card">
+        <div class="market-title">🛡️ Privacidad de Datos (GDPR)</div>
+        <p class="market-desc">
+          Protección absoluta de la información transaccional, garantizando que la capa de accesibilidad cumpla con todas las normativas vigentes de protección de datos personales.
         </p>
       </div>
     </div>
@@ -1773,6 +1893,51 @@
         <button class="sim-card-btn" style="border-color: #0079AB; color: #0079AB;">Simular Banco</button>
       </div>
     </div>
+  </section><!-- /landing-demo-section -->
+
+  <!-- Legal Compliance Section -->
+  <section class="landing-about" id="compliance" style="background-color: var(--sc-slate-50); padding-top: 60px; padding-bottom: 60px;">
+    <div class="landing-section-header">
+      <h2>Obligatoriedad Legal y Normativa</h2>
+      <p>
+        La accesibilidad digital es un derecho garantizado por la ley para plataformas del Estado y servicios esenciales.
+      </p>
+    </div>
+    
+    <div class="market-grid">
+      <!-- Ley 20.422 -->
+      <div class="market-card">
+        <div class="market-title">📜 Ley N° 20.422</div>
+        <p class="market-desc">
+          Ley de Inclusión que obliga a los organismos e instituciones que presten servicios al público a que sus plataformas y sitios web sean accesibles, evitando cualquier tipo de discriminación.
+        </p>
+      </div>
+
+      <!-- Decreto Supremo 1 -->
+      <div class="market-card">
+        <div class="market-title">🏛️ Decreto Supremo N° 1</div>
+        <p class="market-desc">
+          Normativa del Ministerio Secretaría General de la Presidencia (SEGPRES) que exige a los portales del Estado cumplir con directrices internacionales de accesibilidad web de forma obligatoria.
+        </p>
+      </div>
+
+      <!-- WCAG -->
+      <div class="market-card">
+        <div class="market-title">🌍 Estándar WCAG 2.1 AA</div>
+        <p class="market-desc">
+          Las Pautas de Accesibilidad para el Contenido Web son el estándar global exigido por la normativa para asegurar que las plataformas sean operables, comprensibles y robustas para todos.
+        </p>
+      </div>
+
+      <!-- Cumplimiento Propio -->
+      <div class="market-card" style="border: 2px solid var(--sc-brand); background-color: var(--sc-brand-light);">
+        <div class="market-title">🏆 Predicamos con el Ejemplo</div>
+        <p class="market-desc">
+          <strong>Incluso esta página cumple con la norma completa.</strong> Todo nuestro sitio está diseñado con alto contraste, cero distracciones y pleno soporte para tecnologías de asistencia.
+        </p>
+      </div>
+    </div>
+  </section>
 
     <!-- Modal Overlay -->
     <div id="simulation-overlay" class="sim-modal-overlay">
@@ -2936,6 +3101,34 @@
       }
     });
   </script>
+
+  <!-- Footer -->
+  <footer class="sc-footer">
+    <div class="sc-footer-container">
+      <div class="sc-footer-section">
+        <h3>Senior Click</h3>
+        <p>Haciendo la tecnología accesible para todos. Diseñado con altos estándares de inclusión digital.</p>
+        <div class="sc-footer-contact">
+          <p>📞 Teléfono: +56 2 2345 6789</p>
+          <p>✉️ Correo: contacto@seniorclick.cl</p>
+          <p>📍 Dirección: Av. Providencia 1234, Santiago, Chile</p>
+        </div>
+      </div>
+      
+      <div class="sc-footer-section">
+        <h3>Cumplimiento Normativo</h3>
+        <ul class="sc-footer-norms">
+          <li>✅ Ley de Inclusión N° 20.422 (Chile)</li>
+          <li>✅ Decreto Supremo N° 1 (SEGPRES)</li>
+          <li>✅ Estándar Internacional WCAG 2.1 AA</li>
+          <li>✅ Diseño Cognitivo y Prevención de Errores</li>
+        </ul>
+      </div>
+    </div>
+    <div class="sc-footer-bottom">
+      <p>&copy; 2026 Senior Click. Todos los derechos reservados.</p>
+    </div>
+  </footer>
 
 </body>
 </html>
