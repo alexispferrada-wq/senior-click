@@ -772,13 +772,13 @@
     .sc-confirm-val.highlight { color: var(--sc-primary); font-size: 28px; }
 
     .sc-confirm-warning {
-      background: #fef3c7;
-      border: 2px solid #f59e0b;
+      background: var(--sc-primary-lt);
+      border: 2px solid var(--sc-primary);
       border-radius: var(--r-md);
       padding: 16px 20px;
       margin-top: 24px;
       display: flex; align-items: center; gap: 14px;
-      font-size: 17px; color: #7c4a00; font-weight: 500;
+      font-size: 17px; color: var(--sc-text); font-weight: 500;
     }
     .sc-confirm-warning-icon { font-size: 24px; flex-shrink: 0; }
 
@@ -2430,7 +2430,7 @@
         <h1 class="sc-step-title" id="new-account-heading">Agregar nueva cuenta</h1>
         <p class="sc-step-subtitle">Llene los datos con cuidado para guardar a una nueva persona o empresa.</p>
 
-        <div class="sc-confirm-warning" role="note" style="border-color: #dc2626; background: #fef2f2; color: #991b1b; margin-bottom: 28px; padding: 20px;">
+        <div class="sc-confirm-warning" role="note" style="margin-bottom: 28px; padding: 20px;">
           <span class="sc-confirm-warning-icon" aria-hidden="true" style="font-size: 32px;">🛑</span>
           <span style="font-size: 18px; line-height: 1.5;"><strong>Prevención de Estafas:</strong> Solo agregue personas que usted conozca. Si alguien lo está llamando por teléfono y lo presiona para agregar una cuenta rápido, <strong>cuelgue</strong>, podría ser una estafa.</span>
         </div>
@@ -2477,11 +2477,11 @@
         <h1 class="sc-step-title" id="tutor-auth-heading">Seguridad: Autorización del Tutor</h1>
         <p class="sc-step-subtitle">Como está añadiendo una cuenta nueva, necesitamos la autorización de su contacto de confianza.</p>
 
-        <div style="background: #eff6ff; border: 2px solid #3b82f6; border-radius: 12px; padding: 24px; margin-bottom: 24px; display: flex; gap: 16px; align-items: start;">
+        <div style="background: var(--sc-primary-lt); border: 2px solid var(--sc-primary); border-radius: 12px; padding: 24px; margin-bottom: 24px; display: flex; gap: 16px; align-items: start;">
           <div style="font-size: 32px;">📲</div>
           <div>
-            <strong style="display: block; font-size: 19px; color: #1e40af; margin-bottom: 8px;">Código enviado a su Hijo(a)</strong>
-            <span style="font-size: 17px; color: #1e3a8a; line-height: 1.4;">Hemos enviado un SMS automático a su tutor financiero. Por favor, pídale que le dicte el código de 4 dígitos para autorizar a este nuevo destinatario.</span>
+            <strong style="display: block; font-size: 19px; color: var(--sc-text); margin-bottom: 8px;">Código enviado a su Hijo(a)</strong>
+            <span style="font-size: 17px; color: var(--sc-text); line-height: 1.4;">Hemos enviado un SMS automático a su tutor financiero. Por favor, pídale que le dicte el código de 4 dígitos para autorizar a este nuevo destinatario.</span>
           </div>
         </div>
 
