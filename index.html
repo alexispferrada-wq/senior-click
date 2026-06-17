@@ -1693,21 +1693,10 @@
     }
     
     /* Hover effects for each card type */
-    .sim-selector-card[data-bank="santander"]:hover .sim-card-btn {
-      background: #EC0000;
-      color: white;
-    }
-    .sim-selector-card[data-bank="bancoestado"]:hover .sim-card-btn {
-      background: #006FB3;
-      color: white;
-    }
-    .sim-selector-card[data-bank="bancochile"]:hover .sim-card-btn {
-      background: #003B7C;
-      color: white;
-    }
-    .sim-selector-card[data-bank="bci"]:hover .sim-card-btn {
-      background: #0079AB;
-      color: white;
+    .sim-selector-card:hover .sim-card-btn {
+      background: rgba(0, 0, 0, 0.04);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
     
     /* Modal Overlay (Full-screen) */
@@ -1973,29 +1962,29 @@
 
       <!-- BancoEstado -->
       <div class="sim-selector-card" data-bank="bancoestado" onclick="openSimulation('bancoestado')">
-        <div class="sim-card-accent" style="background: #006FB3;"></div>
-        <div class="sim-card-logo" style="background: #006FB3; color: #FFFFFF;">BE</div>
+        <div class="sim-card-accent" style="background: #FF5000;"></div>
+        <div class="sim-card-logo" style="background: #FF5000; color: #FFFFFF;">BE</div>
         <h3 class="sim-card-title">BancoEstado</h3>
         <p class="sim-card-desc">Simula la Cuenta RUT y transferencias con los colores azul institucional de BancoEstado.</p>
-        <button class="sim-card-btn" style="border-color: #006FB3; color: #006FB3;">Simular Banco</button>
+        <button class="sim-card-btn" style="border-color: #FF5000; color: #CC4000;">Simular Banco</button>
       </div>
 
       <!-- Banco de Chile -->
       <div class="sim-selector-card" data-bank="bancochile" onclick="openSimulation('bancochile')">
-        <div class="sim-card-accent" style="background: #003B7C;"></div>
-        <div class="sim-card-logo" style="background: #003B7C; color: #FFFFFF;">BC</div>
+        <div class="sim-card-accent" style="background: #00246B;"></div>
+        <div class="sim-card-logo" style="background: #00246B; color: #FFFFFF;">BC</div>
         <h3 class="sim-card-title">Banco de Chile</h3>
         <p class="sim-card-desc">Prueba el comportamiento adaptativo en la interfaz azul tradicional del Banco de Chile.</p>
-        <button class="sim-card-btn" style="border-color: #003B7C; color: #003B7C;">Simular Banco</button>
+        <button class="sim-card-btn" style="border-color: #00246B; color: #00246B;">Simular Banco</button>
       </div>
 
-      <!-- Bci -->
-      <div class="sim-selector-card" data-bank="bci" onclick="openSimulation('bci')">
-        <div class="sim-card-accent" style="background: linear-gradient(90deg, #0079AB, #48B665, #FFD433, #EF3942);"></div>
-        <div class="sim-card-logo" style="background: linear-gradient(135deg, #0079AB 0%, #48B665 33%, #FFD433 66%, #EF3942 100%); color: #000000;">Bci</div>
-        <h3 class="sim-card-title">Banco Bci</h3>
-        <p class="sim-card-desc">Comprueba la inyección simplificada sobre la paleta corporativa multicolor de Bci.</p>
-        <button class="sim-card-btn" style="border-color: #0079AB; color: #0079AB;">Simular Banco</button>
+      <!-- Banco Falabella -->
+      <div class="sim-selector-card" data-bank="falabella" onclick="openSimulation('falabella')">
+        <div class="sim-card-accent" style="background: #B9D438;"></div>
+        <div class="sim-card-logo" style="background: #B9D438; color: #000000;">F</div>
+        <h3 class="sim-card-title">Banco Falabella</h3>
+        <p class="sim-card-desc">Comprueba la inyección simplificada sobre la paleta verde corporativa de Banco Falabella.</p>
+        <button class="sim-card-btn" style="border-color: #6b7a1e; color: #6b7a1e;">Simular Banco</button>
       </div>
     </div>
   </section><!-- /landing-demo-section -->
@@ -2741,8 +2730,8 @@
 
     const bankThemes = {
       bancoestado: {
-        primary: '#006FB3',
-        secondary: '#FE6565',
+        primary: '#FF5000',
+        secondary: '#006FB3',
         bg: '#f0f6fa',
         border: '#ccddec',
         logoText: 'Banco<span>Estado</span>',
@@ -2752,7 +2741,7 @@
         welcomeText: '¡Bienvenida, Carmen! 👋'
       },
       bancochile: {
-        primary: '#003B7C',
+        primary: '#00246B',
         secondary: '#C9A05A',
         bg: '#f0f3f7',
         border: '#ccd8e5',
@@ -2773,16 +2762,16 @@
         footerText: '© 2025 Banco Santander Chile S.A. — Entidad ficticia académica (FVIE01 · Innovación y Emprendimiento I)',
         welcomeText: '¡Bienvenida a tu Portal Santander, Carmen! 🔴'
       },
-      bci: {
-        primary: '#0079AB',
-        secondary: '#EF3942',
-        bg: '#f0f7fb',
-        border: '#cce4f0',
-        logoText: 'Banco<span>Bci</span>',
-        logoIcon: 'Bci',
-        alertText: '🔒 Conexión segura y protegida — Banco Bci S.A.',
-        footerText: '© 2025 Bci — Entidad ficticia académica (FVIE01 · Innovación y Emprendimiento I)',
-        welcomeText: '¡Bienvenida a Bci, Carmen! 🟢'
+      falabella: {
+        primary: '#B9D438',
+        secondary: '#6b7a1e',
+        bg: '#f5f7ed',
+        border: '#dbe6ab',
+        logoText: 'Banco<span>Falabella</span>',
+        logoIcon: 'F',
+        alertText: '🔒 Conexión segura y protegida — Banco Falabella',
+        footerText: '© 2025 Banco Falabella — Entidad ficticia académica (FVIE01 · Innovación y Emprendimiento I)',
+        welcomeText: '¡Bienvenida a Banco Falabella, Carmen! 🟢'
       }
     };
 
@@ -3010,14 +2999,14 @@
         santander: 'Banco Santander',
         bancoestado: 'BancoEstado',
         bancochile: 'Banco de Chile',
-        bci: 'Banco Bci'
+        falabella: 'Banco Falabella'
       };
       
       const bankDomains = {
         santander: 'santander.cl',
         bancoestado: 'bancoestado.cl',
         bancochile: 'bancochile.cl',
-        bci: 'bci.cl'
+        falabella: 'bancofalabella.cl'
       };
 
       titleText.textContent = 'Simulación ' + (bankNames[bankKey] || 'Banco');
