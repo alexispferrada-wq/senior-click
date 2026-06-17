@@ -782,6 +782,17 @@
     }
     .sc-confirm-warning-icon { font-size: 24px; flex-shrink: 0; }
 
+    .sc-info-box {
+      background: var(--sc-primary-lt);
+      border: 2px solid var(--sc-primary);
+      border-radius: var(--r-md);
+      padding: 24px;
+      margin-bottom: 24px;
+      display: flex;
+      gap: 16px;
+      align-items: start;
+    }
+
     /* ── STEP 4: Success ── */
     #sc-step-4 {
       text-align: center;
@@ -922,12 +933,48 @@
     }
 
     @media (max-width: 600px) {
-      .bank-header-inner { padding: 0 16px; }
+      .bank-header-inner { padding: 12px 16px; flex-direction: column; gap: 12px; }
       #bank-nav { display: none; }
       .sc-recipients-grid { grid-template-columns: 1fr; }
-      .sc-step-title { font-size: 26px; }
+      .sc-step-title { font-size: 24px; line-height: 1.3; }
       .sc-body { padding: 24px 16px 40px; }
-      #sc-header { padding: 0 16px; }
+      #sc-header { 
+        height: auto;
+        padding: 16px; 
+        flex-direction: column; 
+        text-align: center;
+        gap: 16px;
+      }
+      #sc-header > div { justify-content: center; width: 100%; flex-wrap: wrap; }
+      .sc-mode-badge { font-size: 14px; padding: 6px 12px; }
+      .sc-btn { font-size: 18px; padding: 14px 20px; }
+      .sc-btn-row { flex-direction: column; }
+      .sc-input-lg { font-size: 28px !important; }
+      
+      /* Form adjustments para móviles */
+      #sc-step-new-account input, #sc-step-new-account select {
+        font-size: 18px !important;
+        padding: 12px !important;
+      }
+      #tutor-auth-code {
+        width: 100% !important;
+        font-size: 28px !important;
+        letter-spacing: 12px !important;
+      }
+      .sc-confirm-warning {
+        flex-direction: column;
+        text-align: center;
+      }
+      .sc-info-box {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+      }
+      .sc-settings-row {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 16px;
+      }
     }
 
     /* ============================================================
@@ -2477,8 +2524,8 @@
         <h1 class="sc-step-title" id="tutor-auth-heading">Seguridad: Autorización del Tutor</h1>
         <p class="sc-step-subtitle">Como está añadiendo una cuenta nueva, necesitamos la autorización de su contacto de confianza.</p>
 
-        <div style="background: var(--sc-primary-lt); border: 2px solid var(--sc-primary); border-radius: 12px; padding: 24px; margin-bottom: 24px; display: flex; gap: 16px; align-items: start;">
-          <div style="font-size: 32px;">📲</div>
+        <div class="sc-info-box">
+          <div style="font-size: 32px; flex-shrink: 0;">📲</div>
           <div>
             <strong style="display: block; font-size: 19px; color: var(--sc-text); margin-bottom: 8px;">Código enviado a su Hijo(a)</strong>
             <span style="font-size: 17px; color: var(--sc-text); line-height: 1.4;">Hemos enviado un SMS automático a su tutor financiero. Por favor, pídale que le dicte el código de 4 dígitos para autorizar a este nuevo destinatario.</span>
@@ -2508,12 +2555,12 @@
         <p class="sc-step-subtitle">Ajuste sus preferencias de seguridad y asistencia.</p>
 
         <div style="background: white; padding: 32px; border-radius: var(--r-xl); border: 3px solid var(--sc-border); margin-bottom: 32px;">
-          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--sc-border); padding-bottom: 24px; margin-bottom: 24px;">
+          <div class="sc-settings-row" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--sc-border); padding-bottom: 24px; margin-bottom: 24px;">
             <div>
               <h3 style="font-size: 22px; color: var(--sc-text); margin-bottom: 8px;">Tutor Financiero</h3>
               <p style="font-size: 16px; color: var(--sc-muted); max-width: 500px; line-height: 1.5;">Si está activado, se enviará un SMS automático a su contacto de confianza (ej: su hijo) cada vez que añada una nueva cuenta bancaria, pidiendo un código de autorización.</p>
             </div>
-            <label style="position: relative; display: inline-block; width: 60px; height: 34px;">
+            <label style="position: relative; display: inline-block; width: 60px; height: 34px; flex-shrink: 0;">
               <input type="checkbox" id="tutor-toggle" checked onchange="toggleTutor(this)" style="opacity: 0; width: 0; height: 0;">
               <span class="slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--sc-success); transition: .4s; border-radius: 34px;"></span>
               <span class="slider-knob" style="position: absolute; content: ''; height: 26px; width: 26px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; transform: translateX(26px);"></span>
